@@ -93,20 +93,31 @@ public class FriendManager : MonoBehaviour
     }
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Mouse0)) // 쌓기
+        if (Input.GetKeyDown(KeyCode.UpArrow)) // 쌓기
         {
-            EnqueueToHead();
+            if (!captain.GetComponent<Capybara_Move>().GetFloorStuck()) // 머리에 벽이 있으면 머리 위로 못쌓게 함!
+            {
+                EnqueueToHead();
+            }
         }
 
-        if (Input.GetKeyDown(KeyCode.Mouse1)) // 내리기
+        if (Input.GetKeyDown(KeyCode.DownArrow)) // 내리기
         {
             DequeueFromHead();
         }
+
+        Debug.Log("머리 :" + friends_on_head.Count);
+        Debug.Log("꼬리 :" + friends_on_tail.Count);
     }
     private void EnqueueToHead() // 카피바라 친구들을 대장 머리 위로 쌓기
     {
         if (friends_on_tail.Count > 0 && !captain.GetComponent<Capybara_Move>().GetJuming()) // 올릴 카피바라가 존재하면
         {
+            if ((friends_on_tail.Peek().transform.localPosition.y < -1)||(friends_on_tail.Peek().transform.localPosition.y > 1))
+            {
+                Debug.Log("높이가 달라서 쌓을 수 없음");
+                return;
+            }
             Capybara_friend friend = friends_on_tail.Dequeue(); // 꼬리 Queue에서 Dequeue
             friends_on_head.Enqueue(friend); // 머리 Queue에 Enqueue
 
@@ -120,32 +131,68 @@ public class FriendManager : MonoBehaviour
                 otherFriends.RePosition(); // 위치 재설정
             }
         }
-
         StateCheck();
     }
 
     private void DequeueFromHead() // 카피바라 친구들을 대장 머리에서 내리기
     {
-        if (friends_on_head.Count > 0 && !captain.GetComponent<Capybara_Move>().GetJuming()) // 내릴 카피바라가 존재하면
+        if (!captain.GetComponent<Capybara_Move>().GetJuming())
         {
-            Capybara_friend friend = friends_on_head.Dequeue();
-            friends_on_tail.Enqueue(friend);
-            friend.PopFromHead();
+            if (friends_on_head.Count > 0) // 내릴 카피바라가 존재하면
+            {
+                Capybara_friend friend = friends_on_head.Dequeue();
+                friends_on_tail.Enqueue(friend);
+                friend.PopFromHead();
 
-            friend.transform.parent = captain.transform; // 대장 카피바라를 부모로 취급
+                friend.transform.parent = captain.transform; // 대장 카피바라를 부모로 취급
 
-            if (captain.GetComponent<Capybara_Move>().GetFront() == Vector2.left)
-                // 왼쪽을 보고 있을 때
-                friend.transform.position = captain.transform.position + new Vector3((friends_on_tail.Count) * friendsOffset, 0, 0);
-            else
-                // 오른쪽을 보고 있을 때
-                friend.transform.position = captain.transform.position + new Vector3(-(friends_on_tail.Count) * friendsOffset, 0, 0);
+                if (captain.GetComponent<Capybara_Move>().GetFront() == Vector2.left)
+                    // 왼쪽을 보고 있을 때
+                    friend.transform.position = captain.transform.position + new Vector3((friends_on_tail.Count) * friendsOffset, 0, 0);
+                else
+                    // 오른쪽을 보고 있을 때
+                    friend.transform.position = captain.transform.position + new Vector3(-(friends_on_tail.Count) * friendsOffset, 0, 0);
 
-            
 
-            // 위치 재설정
-            friend.Initialize((friends_on_tail.Count), (friends_on_tail.Count) * friendsOffset);
+
+                // 위치 재설정
+                friend.Initialize((friends_on_tail.Count), (friends_on_tail.Count) * friendsOffset);
+            }
+            else if(friends_on_tail.Count > 0) // 꼬리에 자를 카피바라가 있으면
+            {
+                //꼬리자르기
+                CutTheTail();
+            }
         }
+        StateCheck();
+    }
+
+    private void CutTheTail()//꼬리 자르기
+    {
+        Queue<Capybara_friend> tmp = new Queue<Capybara_friend>();
+
+        int cnt1 = friends_on_tail.Count;
+        // 해당 카피바라 꼬리 Queue에서 제거
+        for (int i = 0; i < cnt1; i++)
+        {
+            Capybara_friend f = friends_on_tail.Dequeue();
+            if (i == cnt1 - 1) // 꼬리에 있는 녀석 Missing 처리
+                f.Missing();
+            else
+                tmp.Enqueue(f);
+        }
+
+        friends_on_tail.Clear();
+
+        int cnt2 = tmp.Count;
+        // 꼬리 큐 재 설정 및 친구들 순서 위치 재정의;
+        for (int i = 0; i < cnt2; i++)
+        {
+            Capybara_friend f = tmp.Dequeue();
+            friends_on_tail.Enqueue(f);
+        }
+
+        tmp.Clear();
 
         StateCheck();
     }
@@ -159,22 +206,13 @@ public class FriendManager : MonoBehaviour
         for (int i = 0; i < cnt1; i++)
         {
             Capybara_friend f = friends_on_head.Dequeue();
-            if (capybara != f)
-                tmp.Enqueue(f);
-        }
 
-        friends_on_head.Clear();
+            if (i == cnt1 - 1)
+                f.Missing();
 
-        int cnt2 = tmp.Count;
-        // 꼬리 큐 재 설정 및 친구들 순서 위치 재정의;
-        for (int i = 0; i < cnt2; i++)
-        {
-            Capybara_friend f = tmp.Dequeue();
             friends_on_head.Enqueue(f);
         }
 
-        tmp.Clear();
-        capybara.PopFromHead();
         StateCheck();
     }
 
@@ -233,7 +271,7 @@ public class FriendManager : MonoBehaviour
             // 오른쪽을 보고 있을 때
             capybara_friend.transform.position = captain.transform.position + new Vector3(-(friends_on_tail.Count) * friendsOffset, 0, 0);
 
-        capybara_friend.transform.localScale = new Vector3(capybara_friend.transform.localScale.x, Math.Abs(capybara_friend.transform.localScale.y), capybara_friend.transform.localScale.z); // 스케일 초기화
+        capybara_friend.transform.localScale = new Vector3(Math.Abs(capybara_friend.transform.localScale.x), capybara_friend.transform.localScale.y, capybara_friend.transform.localScale.z); // 스케일 초기화
         capybara_friend.Initialize((friends_on_tail.Count), (friends_on_tail.Count) * friendsOffset);
 
         StateCheck();
@@ -259,5 +297,33 @@ public class FriendManager : MonoBehaviour
 
         if (friends_on_head.Count > 0) canJump = false; // 점프 제어
         else canJump = true;
+    }
+
+    public int HeadQueueCount()
+    {
+        return friends_on_head.Count;
+    }
+    public float HeadConstant()
+    {
+        return headConstant;
+    }
+    public float FriendOffset()
+    {
+        return friendsOffset;
+    }
+
+    public void FriendsMoveTrue()
+    {
+        foreach(Capybara_friend friend in friends_on_tail)
+        {
+            friend.GetComponent<Animator>().SetBool("isMove", true);
+        }
+    }
+    public void FriendsMoveFalse()
+    {
+        foreach (Capybara_friend friend in friends_on_tail)
+        {
+            friend.GetComponent<Animator>().SetBool("isMove", false);
+        }
     }
 }

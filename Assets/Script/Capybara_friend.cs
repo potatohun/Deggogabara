@@ -46,129 +46,217 @@ public class Capybara_friend : MonoBehaviour
     [Header("대장 잃어버렸는지")]
     private bool isMissing;
 
+    [SerializeField]
+    [Header("합류 가능")]
+    private bool canJoin;
+
+    [SerializeField]
+    [Header("상태 표시창")]
+    private GameObject stateNotification;
+
+    [SerializeField]
+    [Header("알림 아이콘")]
+    private GameObject[] notificationIcon;
+
     // 컴포넌트
     private Rigidbody2D rigidbody;
+    private Animator animator;
     
     private void OnEnable() // 오브젝트 생성시 호출
     {
         captain = GameObject.FindWithTag("Player");
         rigidbody = GetComponent<Rigidbody2D>();
+        animator = GetComponent<Animator>();
 
         isStack = false; // 생성될 때 카피바라는 올라가있지 않음
-        isMissing = false;
+        isMissing = true;
+        canJoin = false;
+
+        stateNotification.SetActive(false);
     }
 
     public void Initialize(int number, float followDistance) // 초기화 함수
     {
+        isMissing = false;
         this.number = number;
         this.followDistanceOffset = followDistance;
     }
     public void RePosition() // 위치 재설정
     {
-        this.followDistanceOffset -= 3;
+        this.followDistanceOffset -= FriendManager.friendManager.FriendOffset(); ;
     }
 
     private void Update()
     {
         FindCaptaion();
 
-        if(isStack && (this.transform.localPosition.x < 0)) // 쌓아져있다가 튕겨져서 머리위에서 떨어짐.
+        if (DetectGround())// 땅바닥 감지 (점프 중 확인)
         {
-            FriendManager.friendManager.MissingFromHead(this);
-            FriendManager.friendManager.EnqueueToTail(this);
+            animator.SetBool("isJump", false);
+        }
+        else
+        {
+            animator.SetBool("isJump", true);
+        }
+
+        if (!isMissing)
+        {
+            if (isStack && (this.transform.localPosition.y < 0)) // 쌓아져있다가 튕겨져서 머리위에서 떨어짐.
+            {
+                FriendManager.friendManager.MissingFromHead(this);
+                FriendManager.friendManager.EnqueueToTail(this);
+            }
+
+            if (!isStack && (this.transform.localPosition.x < -3)) // 카피바라보다 앞에 위치하면 miss
+            {
+                Missing();
+            }
+        }
+
+        if (canJoin)
+        {
+            if (Input.GetKeyDown(KeyCode.F)) // 대열 합
+            {
+                JoinToGroup();
+            }
         }
     }
 
     private void FixedUpdate()
     {
-        if (!isMissing && !isStack)
+        if ((!isMissing) && (!isStack)) // 잃어버린 상태가 아니고, 쌓여져있는 상태가 아닐때 쫓아가기
+        {
             Follow();
-    }
+        }
+        else if (isMissing) // 잃어버린 상태 일 때
+        {
+            distanceToPlayer = Vector2.Distance(captain.transform.position, this.transform.position);
 
-    // 스택 상태였다가.
-    // 벽맞아서 머리에서 떨어졌으면
-    // head에서 Dequeue하고
-    // tail에 Enqueue하면 됨
+            // followDistnaceOffset 보다 훨씬 멀어지면 (followDistnaceOffset*2 정도?) 더 이상 쫓아가지 않고 그 자리에서 찾기만 계속함(Missing 상태)
+            if (distanceToPlayer < followDistanceOffset)
+            {
+                canJoin = true;
+                ChangeIcon(false); // 찾으러가겠다는 아이콘으로 설정
+                EnableNotification();
+            }
+            else
+            {
+                canJoin = false;
+                ChangeIcon(true); // 잃어버린 아이콘으로 설정
+                EnableNotification();
+            }
+        }
+    }
 
     void Follow()
     {
         // 대열 or 대장을 향한 벡터 계산 : vectorToPlayer
         vectorToPlayer = captain.transform.position.x - transform.position.x; // 대장 카피바라를 향한 방향
 
-        if (Mathf.Abs(vectorToPlayer) < followDistanceOffset) // vectorToPlayer 보다 작으면 더이상 쫓아가지 않음
+        if (Mathf.Abs(vectorToPlayer) > followDistanceOffset) // vectorToPlayer 보다 작으면 더이상 쫓아가지 않음
         {
-            /*if (vectorToPlayer == Vector2.left)
-                transform.position += Vector3.right * followSpeed * 0.1f; // 왼쪽으로 쫓아가기
-            else if (vectorToPlayer == Vector2.right)
-                transform.position += Vector3.left * followSpeed * 0.1f; // 오른쪽으로 쫓아가기*/
-        }
-        else // vectorToPlayer 보다 크거나 같으면 쫓아서 이동
-        {
+            //animator.SetBool("isMove", true);
             if (vectorToPlayer <= 0)
                 transform.position += Vector3.left * followSpeed; // 왼쪽으로 쫓아가기
             else if (vectorToPlayer > 0)
                 transform.position += Vector3.right * followSpeed; // 오른쪽으로 쫓아가기
         }
+        else
+        {
+            //animator.SetBool("isMove", false);
+        }
     }
 
     void FindCaptaion()
     {
-        // 대장과의 거리 계산 : distanceToPlayer
-        distanceToPlayer = Vector2.Distance(captain.transform.position, this.transform.position);
+        if (!isMissing)
+        {
+            // 대장과의 거리 계산 : distanceToPlayer
+            distanceToPlayer = Vector2.Distance(captain.transform.position, this.transform.position);
 
-        if (isMissing) // 대장을 잃어버린 상태 (대장을 잃어버려서 찾는 상태)
-        {
-            if (distanceToPlayer < followDistanceOffset)
-            {
-                Discovering();
-            } 
-        }
-        else // 대장에 속해있는 상태 (대장을 잃어버릴지 찾는 상태)
-        {
             // followDistnaceOffset 보다 훨씬 멀어지면 (followDistnaceOffset*2 정도?) 더 이상 쫓아가지 않고 그 자리에서 찾기만 계속함(Missing 상태)
-            if (distanceToPlayer > followDistanceOffset * 3)
+            if (distanceToPlayer > followDistanceOffset * 5)
             {
-                Missing();
+                Missing(); // 거리가 멀어지면 대열에서 잃어버려짐
             }
         }
     }
 
-    void Missing() // 대장을 잃어버림. (뺏김, 걸려서 못 쫓아감 등)
+    public void Missing() // 대장을 잃어버림. (뺏김, 걸려서 못 쫓아감 등)
     {
         isMissing = true;
         this.transform.parent = FriendManager.friendManager.gameObject.transform; // 부모를 FriendManager로
+        this.number = 0;
+        this.followDistanceOffset = FriendManager.friendManager.FriendOffset();
         FriendManager.friendManager.DequeueFromTail(this); // 큐에서 자기 자신 빼기
-        /*Debug.Log(this.name + "잃어버림");
-        Debug.Log("거리 : " + distanceToPlayer);*/
     }
 
     public bool GetMissing()
     {
         return isMissing;
     }
-    void Discovering() // 대장을 찾음!
+
+    void JoinToGroup() // 대장을 찾음!
     {
+        DisableNotification();
         isMissing = false;
+        canJoin = false;
         this.transform.parent = captain.transform; // 부모를 Captain으로
         FriendManager.friendManager.EnqueueToTail(this); // 큐에서 자기 자신 넣기
-        /*Debug.Log(this.name + "대장 찾음!");
-        Debug.Log("거리 : " + distanceToPlayer);*/
     }
 
     public void Jump()
     {
         rigidbody.AddForce(Vector2.up * jumpPower, ForceMode2D.Impulse);
+        animator.SetBool("isJump", true);
     }
-
+    bool DetectGround() // 땅바닥 감지
+    {
+        RaycastHit2D[] hits = Physics2D.RaycastAll(transform.position + Vector3.down, Vector2.down, 1f);
+        foreach (RaycastHit2D hit in hits)
+        {
+            Debug.Log(hit.collider.name);
+            if (hit.collider.CompareTag("Ground") || hit.collider.CompareTag("Player") || hit.collider.CompareTag("Friends"))
+            {
+                return true; // Ground 감지 O
+            }
+        }
+        return false; // Ground 감지 X
+    }
     public void PushOnHead() // 머리에 얹혀질 때
     {
         isStack = true;
         rigidbody.excludeLayers = LayerMask.GetMask("Nothing");
-        
+        //rigidbody.bodyType = RigidbodyType2D.Kinematic;
     }
     public void PopFromHead() // 머리에서 내릴 때
     {
         isStack = false;
         rigidbody.excludeLayers = LayerMask.GetMask("Capybara");
+        //rigidbody.bodyType = RigidbodyType2D.Dynamic;
+    }
+
+    public void EnableNotification()
+    {
+        stateNotification.SetActive(true);
+    }
+
+    public void DisableNotification()
+    {
+        stateNotification.SetActive(false);
+    }
+
+    void ChangeIcon(bool isMiss)
+    {
+        if (isMiss)
+        {
+            notificationIcon[0].SetActive(false);
+            notificationIcon[1].SetActive(true);
+        }
+        else
+        {
+            notificationIcon[1].SetActive(false);
+            notificationIcon[0].SetActive(true);
+        }
     }
 }
