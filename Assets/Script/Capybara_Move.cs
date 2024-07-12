@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.Controls;
 using UnityEngine.Rendering;
+using UnityEngine.Rendering.Universal;
 
 public class Capybara_Move : MonoBehaviour
 {
@@ -31,24 +32,43 @@ public class Capybara_Move : MonoBehaviour
     [Header("isJumping")]
     bool isJumping;
 
+    [SerializeField]
+    [Header("isFloorStuck")]
+    bool isFloorStuck;
+
     // 컴포넌트
     private Rigidbody2D rigidbody;
     private SpriteRenderer sp;
+    private Animator animator;
+
     private void Awake()
     {
         rigidbody = GetComponent<Rigidbody2D>();
         sp = GetComponent<SpriteRenderer>();
+        animator = GetComponent<Animator>();
         isJumping = false;
+        isFloorStuck = false;
         frontVector = Vector2.left;
     }
 
     private void Update()
     {
         if (DetectGround())// 땅바닥 감지 (점프 중 확인)
+        {
             isJumping = false;
+            animator.SetBool("isJump", false);
+        }
         else
+        {
             isJumping = true;
+            animator.SetBool("isJump", true);
+        }
+        if (DetectFloor())
+            isFloorStuck = true;
+        else
+            isFloorStuck = false;
     }
+
     void FixedUpdate()
     {
         transform.position += new Vector3(inputVector.x , 0, 0); // 실제 움직임
@@ -58,6 +78,8 @@ public class Capybara_Move : MonoBehaviour
     {
         if (FriendManager.friendManager.CanRotate())
         {
+            animator.SetBool("isMove", true);
+            FriendManager.friendManager.FriendsMoveTrue();
             // 회전 가능 (뒤에 카피바라 친구들 없음)
             inputVector = value.ReadValue<Vector2>();
             inputVector *= movePower;
@@ -65,16 +87,23 @@ public class Capybara_Move : MonoBehaviour
             if (inputVector.x < 0) // 앞 방향 계산
             {
                 frontVector = Vector2.left;
-                transform.localScale = new Vector3(1.5f, 1.5f, 1.5f);
+                transform.localScale = new Vector3(1f, 1f, 1f);
             }
             else if (inputVector.x > 0)
             {
                 frontVector = Vector2.right;
-                transform.localScale = new Vector3(1.5f, -1.5f, 1.5f);
+                transform.localScale = new Vector3(-1f, 1f, 1f);
+            }
+            else
+            {
+                animator.SetBool("isMove", false);
+                FriendManager.friendManager.FriendsMoveFalse();
             }
         }
         else
         {
+            animator.SetBool("isMove", true);
+            FriendManager.friendManager.FriendsMoveTrue();
             // 회전 불가능 (뒤에 카피바라 친구들 있음)
             if (value.ReadValue<Vector2>().x < 0) // 왼쪽 입력이 들어왔을 때
             {
@@ -93,7 +122,12 @@ public class Capybara_Move : MonoBehaviour
                 }
             }
             else // 입력이 없으면 가만히 있기
+            {
+                animator.SetBool("isMove", false);
+                FriendManager.friendManager.FriendsMoveFalse();
                 inputVector = Vector2.zero;
+            }
+                
         }
     }
 
@@ -114,14 +148,26 @@ public class Capybara_Move : MonoBehaviour
         RaycastHit2D[] hits = Physics2D.RaycastAll(transform.position, Vector2.down, jumpDetectRange);
         foreach(RaycastHit2D hit in hits)
         {
-            if(hit.collider.CompareTag("Ground"))
+            if(hit.collider.CompareTag("Ground") || hit.collider.CompareTag("Friends"))
             {
                 return true; // Ground 감지 O
             }
         }
         return false; // Ground 감지 X
     }
-    
+    bool DetectFloor() // 땅바닥 감지
+    {
+        RaycastHit2D[] hits = Physics2D.RaycastAll(transform.position, Vector2.up, (FriendManager.friendManager.HeadQueueCount()+1)* FriendManager.friendManager.HeadConstant());
+        foreach (RaycastHit2D hit in hits)
+        {
+            if (hit.collider.CompareTag("Ground"))
+            {
+                return true; // Ground 감지 O
+            }
+        }
+        return false; // Ground 감지 X
+    }
+
     public Vector2 GetFront()
     {
         return frontVector;
@@ -130,5 +176,10 @@ public class Capybara_Move : MonoBehaviour
     public bool GetJuming()
     {
         return isJumping;
+    }
+
+    public bool GetFloorStuck()
+    {
+        return isFloorStuck;
     }
 }
