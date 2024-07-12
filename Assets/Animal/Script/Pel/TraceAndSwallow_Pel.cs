@@ -3,6 +3,7 @@ using UnityEngine;
 
 public class TraceAndSwallow : MonoBehaviour
 {
+    public Animal animal;
     public Patrol patrol;
 
     public float speed;
@@ -18,6 +19,7 @@ public class TraceAndSwallow : MonoBehaviour
 
     private void Start()
     {
+        animal = GetComponent<Animal>();
         patrol = GetComponent<Patrol>();
     }
     private void Update()
@@ -28,10 +30,10 @@ public class TraceAndSwallow : MonoBehaviour
         Trace();
         Catch();
         ArriveDestination();
-         
+
 
     }
-    void OnDrawGizmos() 
+    void OnDrawGizmos()
     {
         Gizmos.color = Color.green;
         Gizmos.DrawWireSphere(transform.position, FindRange);
@@ -57,11 +59,12 @@ public class TraceAndSwallow : MonoBehaviour
     {
         if (isCatch) // 잡았다
         {
+            FriendManager.friendManager.CaptainTaken();
 
-            transform.GetChild(1).GetComponent<SpriteRenderer>().sortingOrder--;
-            transform.GetChild(1).GetComponent<Transform>().position = transform.GetChild(0).GetComponent<Transform>().position;
+            target.GetComponent<SpriteRenderer>().sortingOrder--;
+            target.transform.position = transform.GetChild(0).GetComponent<Transform>().position;
             transform.position = Vector2.MoveTowards(transform.position, swallowDestination.transform.position + new Vector3(0, 3f, 0), speed * Time.deltaTime);
-
+            //잡았을때 카피바라 위치조정필요함
             patrol.SpriteFlip(swallowDestination.transform.position);
         }
     }
@@ -72,12 +75,13 @@ public class TraceAndSwallow : MonoBehaviour
         if (Vector2.Distance(transform.position, swallowDestination.transform.position + new Vector3(0, 3f, 0)) < 0.1f) // swallowDestination에 다왔다   
         {
             isCatch = false;
-            transform.GetChild(1).GetComponent<SpriteRenderer>().sortingOrder++;
-            target.transform.parent = null;
-            target.GetComponent<Rigidbody2D>().gravityScale = 20;
+            target.GetComponent<SpriteRenderer>().sortingOrder++;
+            target.GetComponent<Rigidbody2D>().isKinematic = false;
 
+            animal.ani.SetBool("Catch", false);
             this.enabled = false;
-            patrol.enabled = true;
+            Invoke("ReturnToFly", 2f);
+
         }
 
     }
@@ -85,9 +89,14 @@ public class TraceAndSwallow : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Player"))
         {
-            collision.GetComponent<Rigidbody2D>().gravityScale = 0.1f;
+            animal.ani.SetBool("Catch", true);
+            collision.GetComponent<Rigidbody2D>().isKinematic = true;
             isCatch = true;
-            collision.transform.SetParent(transform);
         }
+    }
+
+    void ReturnToFly() // Invoke용, patrol을 바로 켜버리면 
+    {
+        patrol.enabled = true;
     }
 }

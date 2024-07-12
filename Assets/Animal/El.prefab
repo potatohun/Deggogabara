@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 2864474076762670838}
   - component: {fileID: 8002597499408719002}
   m_Layer: 0
-  m_Name: 443
+  m_Name: El
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -123,8 +123,9 @@ MonoBehaviour:
   moveSpot: {x: 0, y: 0}
   playerLayer:
     serializedVersion: 2
-    m_Bits: 8
-  FindRange: 7
+    m_Bits: 0
+  FindRangeX: 20
+  FindRangeY: 10
   detectCapy: 0
   TC: {fileID: 0}
   go_takeCapy: 0

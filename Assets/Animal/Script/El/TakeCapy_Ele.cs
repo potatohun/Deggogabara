@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class TakeCapy_Ele : MonoBehaviour
@@ -15,7 +16,7 @@ public class TakeCapy_Ele : MonoBehaviour
 
     void Update()
     {
-     
+
         if (patrol.go_takeCapy)
         {
 
@@ -25,16 +26,30 @@ public class TakeCapy_Ele : MonoBehaviour
         }
 
         if (Vector2.Distance(transform.position, new Vector3(-48.37f, -19.5f, 0)) > 0.2f && !letsGo)
-           ToCapy();
- 
+            ToCapy();
 
-        if (letsGo) 
+        if (Vector2.Distance(transform.position, new Vector3(-48.37f, -19.5f, 0)) < 0.2f)
+        {
+            transform.localScale = patrol.leftScale;
+            StartCoroutine(Return());
+        }
+
+
+        if (letsGo)
+        {
+            StopCoroutine(Return());
             Invoke("TakeCapy", 3f);
-
+    
+        }
+        
       
     }
 
-
+    IEnumerator Return() // 5초안에 안타면 돌아가는건데... 흠... 업데이트에서 두다닥ㅋ
+    {
+        yield return new WaitForSeconds(5f);
+        ReturnToSwim();
+    }
     void ToCapy()
     {
         transform.position = Vector2.MoveTowards(transform.position, new Vector3(-48.37f, -19.5f, 0), speed * Time.deltaTime);
@@ -50,6 +65,7 @@ public class TakeCapy_Ele : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
+        
         if (collision.gameObject.CompareTag("Player"))
             letsGo = true;
         

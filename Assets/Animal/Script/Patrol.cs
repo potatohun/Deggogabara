@@ -1,5 +1,3 @@
-
-using System.Collections;
 using UnityEngine;
 
 public class Patrol : MonoBehaviour
@@ -12,40 +10,45 @@ public class Patrol : MonoBehaviour
     public Vector2 moveSpot;
 
     public LayerMask playerLayer;
-    public float FindRange = 4f;
+    public float FindRange;
+ 
 
     public bool detectCapy = false;
 
-  
+    public Vector3 leftScale, rightScale;
+
     virtual protected void Start()
     {
         initPos = transform.position;
         moveSpot = initPos;
-  
+
+        leftScale = transform.localScale; leftScale.x = -leftScale.x;
+        rightScale = transform.localScale;
     }
 
     virtual protected void Update()
     {
-        detectCapy = Physics2D.OverlapCircle(transform.position, FindRange, playerLayer);
+        detectCapy = Physics2D.OverlapCircle(transform.position, FindRange ,playerLayer);
+    
+        SpriteFlip(moveSpot);
 
-        SpriteFlip(moveSpot);  
-  
     }
 
 
-    void OnDrawGizmos() 
+    void OnDrawGizmos()
     {
         Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(transform.position, FindRange);
+        Gizmos.DrawWireSphere(transform.position,FindRange);
     }
 
     public void SpriteFlip(Vector3 pos)
     {
-     
+
+
         if (transform.position.x - pos.x < 0) // 스프라이트 flip
-            transform.localScale = new Vector3(-1, 1, 1);
+            transform.localScale = rightScale;
         else
-            transform.localScale = new Vector3(1, 1, 1);
+            transform.localScale = leftScale;
 
     }
 
