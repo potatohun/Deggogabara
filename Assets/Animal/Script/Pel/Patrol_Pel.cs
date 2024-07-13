@@ -1,9 +1,9 @@
 using UnityEngine;
 
-public class Patrol_Pell : Patrol
+public class Patrol_Pel : Patrol
 {
 
-    private Animal animal;
+    public Animal animal;
     private TraceAndSwallow TAS;
     override protected void Start()
     {
