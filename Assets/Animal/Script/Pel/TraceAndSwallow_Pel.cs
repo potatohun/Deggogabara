@@ -77,7 +77,7 @@ public class TraceAndSwallow : MonoBehaviour
                 target.gameObject.GetComponent<Capybara_friend>().Missing();
 
 
-            target.GetComponent<SpriteRenderer>().sortingOrder--;
+            target.GetComponent<SpriteRenderer>().sortingOrder = -1;
             target.transform.position = transform.GetChild(0).GetComponent<Transform>().position;
             transform.position = Vector2.MoveTowards(transform.position, swallowDestination, speed * Time.deltaTime);
             patrol.SpriteFlip(swallowDestination);
@@ -92,7 +92,7 @@ public class TraceAndSwallow : MonoBehaviour
         if (Vector2.Distance(transform.position, swallowDestination) < 0.1f) // swallowDestination에 다왔다   
         {
             isCatch = false;
-            target.GetComponent<SpriteRenderer>().sortingOrder++;
+            target.GetComponent<SpriteRenderer>().sortingOrder = 0;
             target.GetComponent<Rigidbody2D>().isKinematic = false;
             FriendManager.friendManager.SetCanRotate(true);
 
