@@ -3324,6 +3324,10 @@ PrefabInstance:
       propertyPath: m_LocalPosition.y
       value: -7.73
       objectReference: {fileID: 0}
+    - target: {fileID: 8515228956829943894, guid: e7f26c9dfde92bc488ddb10bbd9f6110, type: 3}
+      propertyPath: errorSound
+      value: 
+      objectReference: {fileID: 1071250051049018935}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects:
@@ -3341,6 +3345,11 @@ PrefabInstance:
 --- !u!4 &19656714274401076 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4628893794975610781, guid: e7f26c9dfde92bc488ddb10bbd9f6110, type: 3}
+  m_PrefabInstance: {fileID: 4645735474923642025}
+  m_PrefabAsset: {fileID: 0}
+--- !u!82 &1071250051049018935 stripped
+AudioSource:
+  m_CorrespondingSourceObject: {fileID: 5666988423502908062, guid: e7f26c9dfde92bc488ddb10bbd9f6110, type: 3}
   m_PrefabInstance: {fileID: 4645735474923642025}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &4663381763065881482
