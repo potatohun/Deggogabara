@@ -8,6 +8,8 @@ public class Warning : MonoBehaviour
     public TMP_Text text;
     public float fadeDuration = 2.0f; // 페이드 아웃 지속 시간
 
+    bool isPlaying;
+
     private Color originalColor;
 
     void Start()
@@ -17,12 +19,17 @@ public class Warning : MonoBehaviour
             text = GetComponent<TextMeshProUGUI>();
         }
         originalColor = text.color; // 원래 색상 저장
+        isPlaying = false;
     }
     public void PresentWarning(string str)
     {
-        text.text = str;
-        text.color = originalColor; // 텍스트를 원래 색상으로 설정하여 보이게 함
-        StartCoroutine(FadeOut());
+        if (!isPlaying)
+        {
+            isPlaying = true;
+            text.text = str;
+            text.color = originalColor; // 텍스트를 원래 색상으로 설정하여 보이게 함
+            StartCoroutine(FadeOut());
+        }
     }
 
     private IEnumerator FadeOut()
@@ -38,5 +45,6 @@ public class Warning : MonoBehaviour
         }
 
         text.color = new Color(originalColor.r, originalColor.g, originalColor.b, 0f); // 완전히 투명하게 설정
+        isPlaying = false;
     }
 }

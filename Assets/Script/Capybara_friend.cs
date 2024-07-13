@@ -117,10 +117,10 @@ public class Capybara_friend : MonoBehaviour
             }
             else // ²¿¸® »óÅÂ ÀÏ¶§
             {
-                if (!FriendManager.friendManager.GetAllJumping() && distanceToPlayer > followDistanceOffset * 3f)
+                if (!groundCheck.IsGround() && Mathf.Abs(this.transform.position.y - captain.transform.position.y) > 9f)
                 {
                     Debug.Log("Á¡ÇÁ¿¡¼­ ¶³¾îÁü");
-                    Debug.Log(distanceToPlayer);
+                    Debug.Log(Mathf.Abs(this.transform.position.y - captain.transform.position.y));
                     Missing();
                 }
             }
