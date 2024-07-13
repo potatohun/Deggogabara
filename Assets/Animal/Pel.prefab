@@ -26,7 +26,7 @@ Transform:
   m_GameObject: {fileID: 2600406340362905088}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 2.1, y: 0.48, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -64,9 +64,9 @@ CircleCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -1.3, y: 0}
+  m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Radius: 0.6
+  m_Radius: 0.8
 --- !u!1 &6785419510525546038
 GameObject:
   m_ObjectHideFlags: 0
@@ -78,8 +78,10 @@ GameObject:
   - component: {fileID: 6559339352707856988}
   - component: {fileID: 7240946865959559304}
   - component: {fileID: 1602056990870308953}
+  - component: {fileID: 5382276196145095932}
   - component: {fileID: 7072228380378510925}
   - component: {fileID: 6207810439700567000}
+  - component: {fileID: -7460276851512672910}
   m_Layer: 0
   m_Name: Pel
   m_TagString: Untagged
@@ -97,7 +99,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -17.5, y: 8.4, z: 0}
-  m_LocalScale: {x: -1, y: 1, z: 1}
+  m_LocalScale: {x: 1.5, y: 1.5, z: 1.5}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 8948160406751605415}
@@ -182,6 +184,19 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
+--- !u!114 &5382276196145095932
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6785419510525546038}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6b1996b3bf640664bba74c4aedc0b811, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ani: {fileID: 0}
 --- !u!114 &7072228380378510925
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -197,15 +212,17 @@ MonoBehaviour:
   speed: 10
   moveX: 0
   minX: 0
-  maxX: 10
+  maxX: 20
   initPos: {x: 0, y: 0, z: 0}
   moveSpot: {x: 0, y: 0}
   playerLayer:
     serializedVersion: 2
     m_Bits: 64
-  FindRangeX: 30
-  FindRangeY: 20
+  FindRange: 14
   detectCapy: 0
+  leftScale: {x: 0, y: 0, z: 0}
+  rightScale: {x: 0, y: 0, z: 0}
+  animal: {fileID: 0}
   TAS: {fileID: 0}
 --- !u!114 &6207810439700567000
 MonoBehaviour:
@@ -219,12 +236,34 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c56e86ad93386c6488db9d2b5fa4a2fc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  animal: {fileID: 0}
   patrol: {fileID: 0}
-  speed: 17
+  speed: 7
   playerLayer:
     serializedVersion: 2
     m_Bits: 64
-  FindRange: 8
+  FindRange: 10
   target: {fileID: 0}
   isCatch: 0
   swallowDestination: {fileID: 0}
+--- !u!95 &-7460276851512672910
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6785419510525546038}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: c6f8a3706f515704cb602fc7f47950a0, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0

@@ -63,7 +63,7 @@ public class TraceAndSwallow : MonoBehaviour
 
             target.GetComponent<SpriteRenderer>().sortingOrder--;
             target.transform.position = transform.GetChild(0).GetComponent<Transform>().position;
-            transform.position = Vector2.MoveTowards(transform.position, swallowDestination.transform.position + new Vector3(0, 3f, 0), speed * Time.deltaTime);
+            transform.position = Vector2.MoveTowards(transform.position, swallowDestination.transform.position, speed * Time.deltaTime);
             //잡았을때 카피바라 위치조정필요함
             patrol.SpriteFlip(swallowDestination.transform.position);
         }
@@ -71,12 +71,13 @@ public class TraceAndSwallow : MonoBehaviour
 
     void ArriveDestination()
     {
-
-        if (Vector2.Distance(transform.position, swallowDestination.transform.position + new Vector3(0, 3f, 0)) < 0.1f) // swallowDestination에 다왔다   
+  
+        if (Vector2.Distance(transform.position, swallowDestination.transform.position) < 0.1f) // swallowDestination에 다왔다   
         {
             isCatch = false;
-            target.GetComponent<SpriteRenderer>().sortingOrder++;
+            target.GetComponent<SpriteRenderer>().sortingOrder++;        
             target.GetComponent<Rigidbody2D>().isKinematic = false;
+            FriendManager.friendManager.SetCanRotate(true);
 
             animal.ani.SetBool("Catch", false);
             this.enabled = false;
@@ -87,10 +88,14 @@ public class TraceAndSwallow : MonoBehaviour
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.CompareTag("Player"))
+        if (collision.gameObject == target.gameObject)
         {
             animal.ani.SetBool("Catch", true);
-            collision.GetComponent<Rigidbody2D>().isKinematic = true;
+
+            target.transform.localScale = new Vector3(-1, 1, 1);
+        //여기부터    FriendManager.friendManager.SetCanRotate(false);
+            target.GetComponent<Rigidbody2D>().isKinematic = true;
+
             isCatch = true;
         }
     }
