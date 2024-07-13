@@ -16,7 +16,6 @@ public class MenuBtnManager : MonoBehaviour
     Color baseColor = Color.white;
 
     public List<TextMeshProUGUI> textBtn;
-    private float textSpace = 50;
 
     private void Awake()
     {

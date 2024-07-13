@@ -1,18 +1,18 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class Stage : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    TextMeshProUGUI stageText;
+    public int stageNum = 0;
+    public GameObject map;
 
-    // Update is called once per frame
-    void Update()
+    private void Start()
     {
         
+        stageText = GetComponentInChildren<TextMeshProUGUI>();
+        stageText.text = $"{stageNum}";
     }
 }

@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public enum UI
@@ -12,6 +13,8 @@ public enum UI
 
 public class ChapterManager : MonoBehaviour
 {
+    Image chapterBackground;
+
     RectTransform chapterRect;
     RectTransform stageRect;
 
@@ -35,14 +38,15 @@ public class ChapterManager : MonoBehaviour
 
     public Chapter stage;
 
+    public GameObject stagePrefab;
+
     [Header("√©≈Õ ªÁ¿Ã¡Ó")]
     public Vector2 focusSize = new Vector2(600,600);
     public Vector2 defaultSize = new Vector2(700,700);
 
-
-
     private void Awake()
     {
+        chapterBackground = GameObject.Find("ChapterBackground").GetComponent<Image>();
         chapterRect = transform.Find("ChapterGroup").GetComponent<RectTransform>();
         stageRect = transform.Find("StageGroup").GetComponent<RectTransform>();
         chapterText = GameObject.Find("ChapterName").GetComponent<TextMeshProUGUI>();
@@ -56,7 +60,7 @@ public class ChapterManager : MonoBehaviour
 
     private void Update()
     {
-        chapterText.text = chapterList[lastChapter].GetComponent<Chapter>().ChapterName;
+        chapterText.text = chapterList[lastChapter].GetComponent<Chapter>().chapterName;
         if (Input.GetKeyDown(KeyCode.D) || Input.GetKeyDown(KeyCode.RightArrow))
         {
             switch(uiState)
@@ -133,7 +137,9 @@ public class ChapterManager : MonoBehaviour
                         stage = chapterList[lastChapter].GetComponent<Chapter>();
                         for(int i = 0; i < stage.stagePrefabList.Count; i++)
                         {
-                            GameObject stg = Instantiate(stage.stagePrefabList[i], stageRect.transform);
+                            GameObject stg = Instantiate(stagePrefab, stageRect.transform);
+                            stg.GetComponent<Stage>().stageNum = i;
+                            stg.GetComponent<Stage>().map = stage.stagePrefabList[i];
                             stageList.Add(stg);
                         }
 
@@ -153,6 +159,8 @@ public class ChapterManager : MonoBehaviour
                     }
                 case UI.Stage:
                     {
+                        GameManager.instance.SelectMap();
+                        SceneManager.LoadScene(3);
                         return;
                     }
             }
@@ -187,6 +195,7 @@ public class ChapterManager : MonoBehaviour
             {
                 StartCoroutine(ResizeUI(chapter, focusSize, duration));
                 StartCoroutine(FadeUI(chapter.GetComponent<Image>(), 1f, duration));
+                chapterBackground.sprite = chapter.GetComponent<Image>().sprite;
             }
             else
             {
@@ -194,6 +203,7 @@ public class ChapterManager : MonoBehaviour
                 StartCoroutine(FadeUI(chapter.GetComponent<Image>(), 0.5f, duration));
             }
         }
+         
     }
 
     void DefaultSize()

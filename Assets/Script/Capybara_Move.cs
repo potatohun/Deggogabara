@@ -36,9 +36,9 @@ public class Capybara_Move : MonoBehaviour
     [Header("isFloorStuck")]
     bool isFloorStuck;
 
-    [SerializeField]
-    [Header("isFloorStuck")]
     public Transform headPosition;
+
+    public Transform orange;
 
     // ÄÄÆ÷³ÍÆ®
     private Rigidbody2D rigidbody;
@@ -102,7 +102,8 @@ public class Capybara_Move : MonoBehaviour
             {
                 frontVector = Vector2.left;
                 spriteRenderer.flipX = true;
-                headPosition.transform.localPosition = new Vector3(0.98f, 0, 0);
+                headPosition.localPosition = new Vector3(0.98f, 0, 0);
+                orange.localPosition = new Vector3(-0.9827635f, 1.682442f, 0);
                 FriendManager.friendManager.HeadFlip(true);
                 //transform.localScale = new Vector3(1f, 1f, 1f);
             }
@@ -110,7 +111,8 @@ public class Capybara_Move : MonoBehaviour
             {
                 frontVector = Vector2.right;
                 spriteRenderer.flipX = false;
-                headPosition.transform.localPosition = new Vector3(-0.98f, 0, 0);
+                headPosition.localPosition = new Vector3(-0.98f, 0, 0);
+                orange.localPosition = new Vector3(0.9827635f, 1.682442f,0);
                 FriendManager.friendManager.HeadFlip(false);
                 //transform.localScale = new Vector3(-1f, 1f, 1f);
             }
