@@ -196,6 +196,7 @@ MonoBehaviour:
   IsTeamJumping: 0
   headSound: {fileID: 8919286908963209432}
   tailSound: {fileID: 6761678114898237864}
+  errorSound: {fileID: 5666988423502908062}
   warning: {fileID: 3302628718336331136}
 --- !u!82 &8919286908963209432
 AudioSource:
