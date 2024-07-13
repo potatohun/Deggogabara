@@ -130,8 +130,10 @@ public class Finish : MonoBehaviour
     }
     public void ShowResult()
     {
+        timer.isStop = true;
         resultGroup.GetComponent<ResultUIManager>().starSetting(currentStar);
         resultGroup.gameObject.SetActive(true);
+        resultGroup.GetComponent<ResultUIManager>().resultText.text = timer.time; 
     }
     public void IsSwap()
     {
