@@ -1,11 +1,6 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.Assertions.Must;
-using UnityEngine.UIElements;
-using static UnityEngine.Rendering.DebugUI;
 
 public class FriendManager : MonoBehaviour
 {
@@ -126,7 +121,7 @@ public class FriendManager : MonoBehaviour
     {
         if (friends_on_tail.Count > 0 && !captain.GetComponent<Capybara_Move>().GetJuming()) // 올릴 카피바라가 존재하면
         {
-            if ((friends_on_tail.Peek().transform.localPosition.y < -1)||(friends_on_tail.Peek().transform.localPosition.y > 1))
+            if ((friends_on_tail.Peek().transform.localPosition.y < -1) || (friends_on_tail.Peek().transform.localPosition.y > 1))
             {
                 Debug.Log("높이가 달라서 쌓을 수 없음");
                 return;
@@ -171,7 +166,7 @@ public class FriendManager : MonoBehaviour
                 // 위치 재설정
                 friend.Initialize((friends_on_tail.Count), (friends_on_tail.Count) * friendsOffset);
             }
-            else if(friends_on_tail.Count > 0) // 꼬리에 자를 카피바라가 있으면
+            else if (friends_on_tail.Count > 0) // 꼬리에 자를 카피바라가 있으면
             {
                 //꼬리자르기
                 CutTheTail();
@@ -242,7 +237,7 @@ public class FriendManager : MonoBehaviour
         foreach (Capybara_friend friend in friends_on_tail)
         {
             yield return new WaitForSeconds(jumpDelay);
-            if(!friend.GetMissing())
+            if (!friend.GetMissing())
                 friend.Jump();
         }
     }
@@ -259,7 +254,7 @@ public class FriendManager : MonoBehaviour
             if (capybara != f)
                 tmp.Enqueue(f);
         }
-       
+
         friends_on_tail.Clear();
 
         int cnt2 = tmp.Count;
@@ -290,7 +285,7 @@ public class FriendManager : MonoBehaviour
 
         Debug.Log(capybara_friend.transform.localScale);
 
-        if(captain.GetComponent<Capybara_Move>().GetFront() == Vector2.left)
+        if (captain.GetComponent<Capybara_Move>().GetFront() == Vector2.left)
         {
             capybara_friend.GetComponent<SpriteRenderer>().flipX = true;
         }
@@ -306,15 +301,16 @@ public class FriendManager : MonoBehaviour
 
     public void CaptainTaken() // 대장 카피바라가 잡힘
     {
-        Debug.Log("ㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋ");
+
         foreach (Capybara_friend friend in friends_on_head) // 머리에 존재하던 카피바라들 내리기
         {
-            DequeueFromHead();
+            friend.Missing();
+
         }
 
         foreach (Capybara_friend friend in friends_on_tail) // 꼬리에 존재하던 카피바라들 내리기
         {
-            DequeueFromTail(friend);
+            friend.Missing();
         }
     }
 
@@ -342,7 +338,7 @@ public class FriendManager : MonoBehaviour
 
     public void FriendsMoveTrue()
     {
-        foreach(Capybara_friend friend in friends_on_tail)
+        foreach (Capybara_friend friend in friends_on_tail)
         {
             friend.GetComponent<Animator>().SetBool("isMove", true);
         }
@@ -363,8 +359,8 @@ public class FriendManager : MonoBehaviour
         Capybara_friend[] friend = transform.GetComponentsInChildren<Capybara_friend>();
         for (int i = 0; i < friend.Length; i++)
         {
-            
-            if(leastDistance > friend[i].DistanceToCaptain()) // 최소보다 더 작으면
+
+            if (leastDistance > friend[i].DistanceToCaptain()) // 최소보다 더 작으면
             {
                 if (friend[i].canJoin)
                 {
@@ -379,7 +375,7 @@ public class FriendManager : MonoBehaviour
 
     public void HeadFlip(bool LR)
     {
-        foreach(Capybara_friend friend in friends_on_head)
+        foreach (Capybara_friend friend in friends_on_head)
         {
             friend.GetComponent<SpriteRenderer>().flipX = LR;
         }

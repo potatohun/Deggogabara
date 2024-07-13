@@ -3,8 +3,8 @@ using UnityEngine;
 
 public class Patrol_Snake : Patrol
 {
-    public Swallow_Snake SN;
-    public bool go_takeCapy = false;
+    private Swallow_Snake SN;
+    private bool go_takeCapy = false;
 
     protected override void Start()
     {
@@ -18,6 +18,11 @@ public class Patrol_Snake : Patrol
     }
 
 
+    public bool GetGoTakeCapy()
+    { return go_takeCapy; }
+
+    public void SetGoTakeCapy(bool input)
+    { go_takeCapy = input; }
 
     void Patrol()
     {
@@ -28,8 +33,7 @@ public class Patrol_Snake : Patrol
 
             if (Vector2.Distance(transform.position, moveSpot) < 0.1f)
             {
-                moveX = Random.Range(minX, maxX);
-                //moveY = Random.Range(minY, maxY);
+                moveX = Random.Range(minX, maxX);            
                 moveSpot = initPos + new Vector3(moveX, 0);
 
             }

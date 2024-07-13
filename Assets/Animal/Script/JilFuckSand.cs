@@ -1,39 +1,29 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class JilFuckSand : MonoBehaviour
 {
-    public float sinkingSpeed; // 빠지는 속도
-    public bool isInQuicksand = false; // 빠졌는지?
 
-/*    public void OnTriggerStay2D(Collider2D collision)
-    {
-        if(collision.CompareTag("Player"))
-            collision.transform.position += Vector3.down * sinkingSpeed * Time.deltaTime;
-
-    }*/
-
-    private void OnCollisionStay2D(Collision2D collision)
+    public float sinkingPower;
+    public float capyMovePOwer;
+    private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.CompareTag("Player"))
-            collision.transform.position += Vector3.down * sinkingSpeed * Time.deltaTime;
-    }
-    /*    void OnTriggerEnter2D(Collider2D other)
         {
-            if (other.CompareTag("Player"))
-            {
-                isInQuicksand = true;
-            }
+            capyMovePOwer = collision.gameObject.GetComponent<Capybara_Move>().GetMovePower();
+            collision.gameObject.GetComponent<Capybara_Move>().SetMovePower(capyMovePOwer - sinkingPower);
         }
+    }
 
-        void OnTriggerExit2D(Collider2D other)
+    private void OnCollisionExit2D(Collision2D collision)
+    {
+        if (collision.gameObject.CompareTag("Player"))
         {
-            if (other.CompareTag("Player"))
-            {
-                isInQuicksand = false;
-            }
-        }*/
+            capyMovePOwer = collision.gameObject.GetComponent<Capybara_Move>().GetMovePower();
+            collision.gameObject.GetComponent<Capybara_Move>().SetMovePower(capyMovePOwer + sinkingPower);
+        }
+    }
+
+
 
 
 }

@@ -3,8 +3,8 @@ using UnityEngine;
 public class Patrol_Pell : Patrol
 {
 
-    public Animal animal;
-    public TraceAndSwallow TAS;
+    private Animal animal;
+    private TraceAndSwallow TAS;
     override protected void Start()
     {
         base.Start();

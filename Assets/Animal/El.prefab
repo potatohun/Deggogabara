@@ -14,9 +14,10 @@ GameObject:
   - component: {fileID: 2484029431279067122}
   - component: {fileID: 2864474076762670838}
   - component: {fileID: 8002597499408719002}
+  - component: {fileID: 210511723550222564}
   m_Layer: 0
   m_Name: El
-  m_TagString: Untagged
+  m_TagString: Ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -31,7 +32,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -55.43, y: -19.5, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 2, y: 2, z: 2}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -100,7 +101,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 61211e83ecb341442b77554fa4df0f16, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 5
+  speed: 7
   letsGo: 0
   patrol: {fileID: 0}
 --- !u!114 &2484029431279067122
@@ -123,10 +124,11 @@ MonoBehaviour:
   moveSpot: {x: 0, y: 0}
   playerLayer:
     serializedVersion: 2
-    m_Bits: 0
-  FindRangeX: 20
-  FindRangeY: 10
+    m_Bits: 8
+  FindRange: 10
   detectCapy: 0
+  leftScale: {x: 0, y: 0, z: 0}
+  rightScale: {x: 0, y: 0, z: 0}
   TC: {fileID: 0}
   go_takeCapy: 0
 --- !u!50 &2864474076762670838
@@ -191,3 +193,24 @@ CapsuleCollider2D:
   m_Offset: {x: -0.28182325, y: -0.48679414}
   m_Size: {x: 7.6284285, y: 1.716423}
   m_Direction: 1
+--- !u!95 &210511723550222564
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 95032126102863141}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: e5236de377d5af1489bf08fd1cc513d0, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
