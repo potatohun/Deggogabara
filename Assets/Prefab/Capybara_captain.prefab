@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 2369345123606489252}
   m_Layer: 3
   m_Name: HeadOfCaptain
-  m_TagString: Untagged
+  m_TagString: Head
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
