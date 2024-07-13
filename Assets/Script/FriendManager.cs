@@ -384,4 +384,9 @@ public class FriendManager : MonoBehaviour
             friend.GetComponent<SpriteRenderer>().flipX = LR;
         }
     }
+
+    public int TotalCapybaraFriendCount()
+    {
+        return friends_on_head.Count + friends_on_tail.Count;
+    }
 }

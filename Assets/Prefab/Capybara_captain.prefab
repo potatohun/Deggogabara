@@ -175,6 +175,7 @@ MonoBehaviour:
   isJumping: 0
   isFloorStuck: 0
   headPosition: {fileID: 2369345123606489252}
+  orange: {fileID: 5124861266279973497}
 --- !u!212 &8790597777963140736
 SpriteRenderer:
   m_ObjectHideFlags: 0
