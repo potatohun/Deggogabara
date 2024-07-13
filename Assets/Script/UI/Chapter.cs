@@ -6,4 +6,5 @@ public class Chapter : MonoBehaviour
 {
     public List<GameObject> stagePrefabList;
     public string chapterName;
+
 }
