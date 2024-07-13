@@ -7,7 +7,6 @@ public class BlinkText : MonoBehaviour
 {
     public float blinkTime;
     TextMeshProUGUI blinkText;
-    public string tempText;
 
     public Color baseColor =  new Color(204, 204, 204,1);
     public Color pointColor = Color.white;
@@ -15,7 +14,6 @@ public class BlinkText : MonoBehaviour
     public void Awake()
     {
         blinkText = GetComponent<TextMeshProUGUI>();
-        tempText = blinkText.text;
     }
 
     public void Start()

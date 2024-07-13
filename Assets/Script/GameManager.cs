@@ -33,6 +33,7 @@ public class GameManager : MonoBehaviour
     
 
     public AudioSource uiAudioMaster;
+    public AudioSource bgmAudioMaster;
 
     [Header("È¿°úÀ½")]
     public AudioClip btnSwap;

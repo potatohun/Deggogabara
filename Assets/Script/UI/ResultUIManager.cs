@@ -1,34 +1,24 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
-using TMPro;
 
-public class Stage : MonoBehaviour
+public class ResultUIManager : MonoBehaviour
 {
-
-    public Sprite offStar;
-    public Sprite onStar;
-
     public Image starOne;
     public Image starTwo;
     public Image starThree;
 
-    TextMeshProUGUI stageText;
-    public int stageNum = 0;
-    public MapData map;
+    public Sprite offStar;
+    public Sprite onStar;
 
-    private void Start()
+    public TextMeshProUGUI resultText;
+
+    public void starSetting(int i)
     {
-        
-        stageText = GetComponentInChildren<TextMeshProUGUI>();
-        stageText.text = $"{stageNum}";
-
-
-    }
-    private void Update()
-    {
-        switch (PlayerPrefs.GetInt($"{map.chapter}{map.stage}"))
+        switch (i)
         {
             case 0:
                 starOne.sprite = offStar;
@@ -53,5 +43,4 @@ public class Stage : MonoBehaviour
                 break;
         }
     }
-
 }
