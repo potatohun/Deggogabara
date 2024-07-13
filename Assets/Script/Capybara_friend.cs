@@ -109,7 +109,7 @@ public class Capybara_friend : MonoBehaviour
         {
             if (isStack) // 머리 위 상태일 때 
             {
-                if ((this.transform.localPosition.y - captain.transform.position.y) < 0) // 쌓아져있다가 튕겨져서 머리위에서 떨어짐.)
+                if ((this.transform.position.y - captain.transform.position.y) < 0) // 쌓아져있다가 튕겨져서 머리위에서 떨어짐.)
                 {
                     Debug.Log("튕겨져서 떨어짐");
                     Missing();

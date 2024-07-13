@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class FriendManager : MonoBehaviour
@@ -55,6 +56,9 @@ public class FriendManager : MonoBehaviour
 
     public AudioSource headSound;
     public AudioSource tailSound;
+    public AudioSource errorSound;
+
+    public Warning warning;
     public bool CanRotate()
     {
         return canRotate;
@@ -118,7 +122,8 @@ public class FriendManager : MonoBehaviour
             }
             else
             {
-                Debug.Log("ERROR : 위에 벽이 막혀있어요!");
+                warning.PresentWarning("위에 벽이 막혀있어요!");
+                errorSound.Play();
             }
         }
 
@@ -130,7 +135,8 @@ public class FriendManager : MonoBehaviour
             }
             else
             {
-                Debug.Log("ERROR : 뒤에 벽이 막혀있어요!");
+                warning.PresentWarning("뒤에 벽이 막혀있어요!");
+                errorSound.Play();
             }
         }
 
@@ -148,7 +154,8 @@ public class FriendManager : MonoBehaviour
         {
             if (Mathf.Abs(friends_on_tail.Peek().transform.position.y - captain.transform.position.y) > 3f)
             {
-                Debug.Log("ERROR : 높이가 달라서 쌓을 수 없음");
+                warning.PresentWarning("높이가 달라서 쌓을 수 없어요!");
+                errorSound.Play();
                 return;
             }
 
@@ -176,7 +183,6 @@ public class FriendManager : MonoBehaviour
         {
             if (friends_on_head.Count > 0) // 내릴 카피바라가 존재하면
             {
-                tailSound.Play();
                 Capybara_friend friend = friends_on_head.Dequeue();
                 friends_on_tail.Enqueue(friend);
                 friend.PopFromHead();
@@ -311,6 +317,7 @@ public class FriendManager : MonoBehaviour
 
     public void EnqueueToTail(Capybara_friend capybara_friend)
     {
+        tailSound.Play();
         friends_on_tail.Enqueue(capybara_friend);
         capybara_friend.PopFromHead();
 
