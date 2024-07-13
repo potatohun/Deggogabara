@@ -52,6 +52,9 @@ public class FriendManager : MonoBehaviour
     public GameObject friend_prefab;
 
     public bool IsTeamJumping;
+
+    public AudioSource headSound;
+    public AudioSource tailSound;
     public bool CanRotate()
     {
         return canRotate;
@@ -107,7 +110,7 @@ public class FriendManager : MonoBehaviour
     }
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.UpArrow)) // 쌓기
+        if (Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.UpArrow)) // 쌓기
         {
             if (!captain.GetComponent<Capybara_Move>().GetUpFloorStuck()) // 머리에 벽이 있으면 머리 위로 못쌓게 함!
             {
@@ -119,7 +122,7 @@ public class FriendManager : MonoBehaviour
             }
         }
 
-        if (Input.GetKeyDown(KeyCode.DownArrow)) // 내리기
+        if (Input.GetKeyDown(KeyCode.S) || Input.GetKeyDown(KeyCode.DownArrow)) // 내리기
         {
             if (!captain.GetComponent<Capybara_Move>().GetBackFloorStuck())
             {
@@ -148,6 +151,9 @@ public class FriendManager : MonoBehaviour
                 Debug.Log("ERROR : 높이가 달라서 쌓을 수 없음");
                 return;
             }
+
+            headSound.Play();
+
             Capybara_friend friend = friends_on_tail.Dequeue(); // 꼬리 Queue에서 Dequeue
             friends_on_head.Enqueue(friend); // 머리 Queue에 Enqueue
 
@@ -170,6 +176,7 @@ public class FriendManager : MonoBehaviour
         {
             if (friends_on_head.Count > 0) // 내릴 카피바라가 존재하면
             {
+                tailSound.Play();
                 Capybara_friend friend = friends_on_head.Dequeue();
                 friends_on_tail.Enqueue(friend);
                 friend.PopFromHead();
