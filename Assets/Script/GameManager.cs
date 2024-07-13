@@ -38,16 +38,15 @@ public class GameManager : MonoBehaviour
     public AudioClip btnSwap;
     public AudioClip btnSelect;
 
-    public GameObject map;
+    public MapData map;
 
     private void OnEnable()
     {
-       
     }
 
     public void SelectMap()
     {
         ChapterManager ChapterManager  = GameObject.Find("ChapterManager").GetComponent<ChapterManager>();
-        GameManager.instance.map = ChapterManager.stageList[ChapterManager.selectedStage].GetComponent<Stage>().map;
+        map = ChapterManager.stageList[ChapterManager.selectedStage].GetComponent<Stage>().map;
     }
 }

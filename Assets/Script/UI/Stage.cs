@@ -7,7 +7,7 @@ public class Stage : MonoBehaviour
 {
     TextMeshProUGUI stageText;
     public int stageNum = 0;
-    public GameObject map;
+    public MapData map;
 
     private void Start()
     {

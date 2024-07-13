@@ -166,7 +166,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8b3689d7f82d61a42b593a8a87688ddf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  map: {fileID: 0}
+  player: {fileID: 8443455951272525481, guid: e2d5449238f43b74f977e22a9d258d01, type: 3}
 --- !u!1 &1297007817
 GameObject:
   m_ObjectHideFlags: 0
@@ -333,8 +333,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0aa5049fe55243446af612bac0d570cc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  chapter: 0
-  stage: 0
+  uiAudioMaster: {fileID: 0}
+  btnSwap: {fileID: 0}
+  btnSelect: {fileID: 0}
+  map: {fileID: 0}
 --- !u!4 &1495010835
 Transform:
   m_ObjectHideFlags: 0

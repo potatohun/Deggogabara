@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Chapter : MonoBehaviour
 {
-    public List<GameObject> stagePrefabList;
+    public List<MapData> stageData;
     public string chapterName;
 
 }

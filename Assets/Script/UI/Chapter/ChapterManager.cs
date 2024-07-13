@@ -82,11 +82,11 @@ public class ChapterManager : MonoBehaviour
                     }
                 case UI.Stage: 
                     {
-                        if (selectedStage < stage.stagePrefabList.Count - 1)
+                        if (selectedStage < stage.stageData.Count - 1)
                         {
                             GameManager.instance.uiAudioMaster.PlayOneShot(GameManager.instance.btnSwap);
                             selectedStage++;
-                            ColorReset(stageList[selectedStage]);
+                            ColorReset();
                         }
                         
                         return;
@@ -117,7 +117,7 @@ public class ChapterManager : MonoBehaviour
                         {
                             GameManager.instance.uiAudioMaster.PlayOneShot(GameManager.instance.btnSwap);
                             selectedStage--;
-                            ColorReset(stage.stagePrefabList[selectedStage]);
+                            ColorReset();
                         }
                         
                         return;
@@ -140,12 +140,14 @@ public class ChapterManager : MonoBehaviour
                         stageList.Clear();
 
                         stage = chapterList[lastChapter].GetComponent<Chapter>();
-                        for(int i = 0; i < stage.stagePrefabList.Count; i++)
+                        
+                        for(int i = 0; i < stage.stageData.Count; i++)
                         {
                             GameObject stg = Instantiate(stagePrefab, stageRect.transform);
                             stg.GetComponent<Stage>().stageNum = i;
-                            stg.GetComponent<Stage>().map = stage.stagePrefabList[i];
+                            stg.GetComponent<Stage>().map = stage.stageData[i];
                             stageList.Add(stg);
+                            
                         }
 
                         targetPosition = new Vector2(0, 25);
@@ -158,7 +160,7 @@ public class ChapterManager : MonoBehaviour
                                 StartCoroutine(FadeUI(chapter.GetComponent<Image>(), 0, duration));
                             }
                         }
-                        ColorReset(stageList[selectedStage]);
+                        ColorReset();
                         uiState = UI.Stage;
                         return;
                     }
@@ -222,7 +224,7 @@ public class ChapterManager : MonoBehaviour
         }
     }
 
-    public void ColorReset(GameObject stageColor)
+    public void ColorReset()
     {
         foreach (var t in stageList)
         {
