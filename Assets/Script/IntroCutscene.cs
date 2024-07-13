@@ -23,7 +23,7 @@ public class IntroCutscene : MonoBehaviour
     public void FadeIn()
     {
         StartCoroutine(Fade(0f, 1f));
-        Invoke("LoadNextScene", 1f);
+        Invoke("LoadNextScene", fadeDuration);
     }
 
     public void FadeOut()
