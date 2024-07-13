@@ -16,6 +16,7 @@ public class TakeCapy_Ele : MonoBehaviour
     [SerializeField]
     private float takeCapy_PosX;
 
+    [SerializeField]
     private Vector2 toCapy_Pos, takeCapy_Pos;
   
     void Start()
@@ -60,13 +61,14 @@ public class TakeCapy_Ele : MonoBehaviour
 
     void ToCapy()
     {
-        transform.position = Vector2.MoveTowards(transform.position, new Vector3(-48.37f, -19.5f, 0), speed * Time.deltaTime);
+        transform.position = transform.TransformDirection(Vector2.MoveTowards(transform.position, toCapy_Pos, speed * Time.deltaTime));
+        transform.position = transform.TransformDirection(transform.position);
         patrol.SpriteFlip(toCapy_Pos);
     }
 
     void TakeCapy()
     {
-        transform.position = Vector2.MoveTowards(transform.position, new Vector3(-75.45f, -19.5f, 0), speed * Time.deltaTime);
+        transform.position = Vector2.MoveTowards(transform.position, takeCapy_Pos, speed * Time.deltaTime);
         patrol.SpriteFlip(takeCapy_Pos);
     }
 
