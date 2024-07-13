@@ -7,6 +7,7 @@ public class Timer : MonoBehaviour
 {
     public TextMeshProUGUI timeText;
     public float elapsedTime;
+    public bool isStop;
 
     private void Start()
     {
@@ -15,7 +16,8 @@ public class Timer : MonoBehaviour
 
     void Update()
     {
-        elapsedTime += Time.deltaTime;
+        if (!isStop)
+            elapsedTime += Time.deltaTime;
 
         int minutes = Mathf.FloorToInt(elapsedTime / 60F);
         int seconds = Mathf.FloorToInt(elapsedTime % 60F);

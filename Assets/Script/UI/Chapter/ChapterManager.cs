@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -86,7 +87,7 @@ public class ChapterManager : MonoBehaviour
                         {
                             GameManager.instance.uiAudioMaster.PlayOneShot(GameManager.instance.btnSwap);
                             selectedStage++;
-                            ColorReset();
+                            SwapStage();
                         }
                         
                         return;
@@ -117,7 +118,7 @@ public class ChapterManager : MonoBehaviour
                         {
                             GameManager.instance.uiAudioMaster.PlayOneShot(GameManager.instance.btnSwap);
                             selectedStage--;
-                            ColorReset();
+                            SwapStage();
                         }
                         
                         return;
@@ -146,9 +147,10 @@ public class ChapterManager : MonoBehaviour
                             GameObject stg = Instantiate(stagePrefab, stageRect.transform);
                             stg.GetComponent<Stage>().stageNum = i;
                             stg.GetComponent<Stage>().map = stage.stageData[i];
-                            stageList.Add(stg);
-                            
+                            stageList.Add(stg); 
                         }
+                        SwapStage();
+
 
                         targetPosition = new Vector2(0, 35);
                         StartCoroutine(MoveUI(stageRect, targetPosition, duration));
@@ -212,6 +214,22 @@ public class ChapterManager : MonoBehaviour
         }
          
     }
+    void SwapStage()
+    {
+        foreach (var stage in stageList)
+        {
+            if (stage == stageList[selectedStage])
+            {
+                StartCoroutine(ResizeUI(stage.GetComponent<RectTransform>(), new Vector2(150,150), duration));
+                
+            }
+            else
+            {
+                StartCoroutine(ResizeUI(stage.GetComponent<RectTransform>(), new Vector2(125, 125), duration));
+            }
+        }
+
+    }
 
     void DefaultSize()
     {
@@ -224,14 +242,48 @@ public class ChapterManager : MonoBehaviour
         }
     }
 
+    public void StarSet()
+    {
+        foreach(var a in stageList)
+        {
+            Stage t = a.GetComponent<Stage>();
+            int star = PlayerPrefs.GetInt($"{t.map.chapter}{t.map.stage}");
+
+            switch (star)
+            {
+                case 0:
+                    t.starOne.sprite = t.offStar;
+                    t.starTwo.sprite = t.offStar;
+                    t.starThree.sprite = t.offStar;
+                    break;
+                case 1:
+                    t.starOne.sprite = t.onStar;
+                    t.starTwo.sprite = t.offStar;
+                    t.starThree.sprite = t.offStar;
+                    break;
+
+                case 2:
+                    t.starOne.sprite = t.onStar;
+                    t.starTwo.sprite = t.onStar;
+                    t.starThree.sprite = t.offStar;
+                    break;
+                case 3:
+                    t.starOne.sprite = t.onStar;
+                    t.starTwo.sprite = t.onStar;
+                    t.starThree.sprite = t.onStar;
+                    break;
+            }
+        }
+    }
+
     public void ColorReset()
     {
         foreach (var t in stageList)
         {
             if (stageList[selectedStage] == t)
-                t.GetComponentsInChildren<Image>()[1].color = new Color(255, 255, 255, 0f);
+                t.GetComponentInChildren<TextMeshProUGUI>().color = new Color(255, 255, 255, 1f);
             else
-                t.GetComponentsInChildren<Image>()[1].color = new Color(255, 255, 255, 0.8f);
+                t.GetComponentInChildren<TextMeshProUGUI>().color = new Color(191, 191, 191, 1f);
         }
     }
 

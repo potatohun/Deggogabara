@@ -152,6 +152,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   uiAudioMaster: {fileID: 0}
+  bgmAudioMaster: {fileID: 0}
   btnSwap: {fileID: 0}
   btnSelect: {fileID: 0}
   map: {fileID: 0}
@@ -395,14 +396,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 6172881680672239498, guid: af02458cd6aa93642ac473eb4e67e0a6, type: 3}
-      propertyPath: stagePrefabList.Array.data[0]
-      value: 
-      objectReference: {fileID: 3460480888436733052, guid: 6ec5f863a68ffdd4390e1cec3f8fd4ab, type: 3}
-    - target: {fileID: 6172881680672239498, guid: af02458cd6aa93642ac473eb4e67e0a6, type: 3}
-      propertyPath: stagePrefabList.Array.data[1]
-      value: 
-      objectReference: {fileID: 3460480888436733052, guid: a1d636003834bce4d84f8c891c13094f, type: 3}
     - target: {fileID: 8140514769562417173, guid: af02458cd6aa93642ac473eb4e67e0a6, type: 3}
       propertyPath: m_Name
       value: ChapterCanvas

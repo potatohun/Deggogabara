@@ -5,23 +5,21 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
-public enum Menu
+public enum Pause
 {
-    Play = 0,
-    Option = 1,
-    Exit = 2    
+    Resume = 0,
+    Retry = 1,
+    Option = 2,
+    ExitToMap = 3,
 }
-public class MenuBtnManager : MonoBehaviour
+public class ResumeUIManager : MonoBehaviour
 {
-    bool isMoving = false;
 
     public Image fadeUI;
-
-    public Animator logoAnimator;
-    public RectTransform textGroup;
+     
     public float movingDuration;
 
-    public Menu menuState;
+    public Pause pauseState;
 
     public Color baseColor;
     public Color pointColor;
@@ -39,77 +37,86 @@ public class MenuBtnManager : MonoBehaviour
     private void Start()
     {
         textBtn[0].color = pointColor;
-        logoAnimator.Play("Bounce");
-        StartCoroutine(MoveUI(textGroup, new Vector2(0, 40), movingDuration));
     }
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.DownArrow) || Input.GetKeyDown(KeyCode.S) && !isMoving)
+        if (Input.GetKeyDown(KeyCode.DownArrow) || Input.GetKeyDown(KeyCode.S))
         {
             GameManager.instance.uiAudioMaster.PlayOneShot(GameManager.instance.btnSwap);
-            switch (menuState)
+            switch (pauseState)
             {
-                case Menu.Play:
-                    menuState = Menu.Option;
-                    return; 
-                case Menu.Option:
-                    menuState = Menu.Exit;
+                case Pause.Resume:
+                    pauseState = Pause.Retry;
                     return;
-                case Menu.Exit:
-                    menuState = Menu.Play;
+                case Pause.Retry:
+                    pauseState = Pause.Option;
+                    return;
+                case Pause.Option:
+                    pauseState = Pause.ExitToMap;
+                    return;
+                case Pause.ExitToMap:
+                    pauseState = Pause.Resume;
                     return;
             }
         }
-        if( Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.W) && !isMoving)
+        if (Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.W))
         {
             GameManager.instance.uiAudioMaster.PlayOneShot(GameManager.instance.btnSwap);
-            switch (menuState)
+            switch (pauseState)
             {
-                case Menu.Play:
-                    menuState = Menu.Exit;
+                case Pause.Resume:
+                    pauseState = Pause.ExitToMap;
                     return;
-                case Menu.Option:
-                    menuState = Menu.Play;
+                case Pause.Retry:
+                    pauseState = Pause.Resume;
                     return;
-                case Menu.Exit:
-                    menuState = Menu.Option;
+                case Pause.Option:
+                    pauseState = Pause.Retry;
+                    return;
+                case Pause.ExitToMap:
+                    pauseState = Pause.Option;
                     return;
             }
         }
-        if(Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.Return) && !isMoving)
+        if (Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.Return))
         {
             GameManager.instance.uiAudioMaster.PlayOneShot(GameManager.instance.btnSelect);
-            switch (menuState)
+            switch (pauseState)
             {
-                case Menu.Play:
-                    StartCoroutine(FadeUI(fadeUI, 1f, 0.3f));
-                    Invoke("SwapScene", 0.3f);
+                case Pause.Resume:
+                    FindAnyObjectByType<Finish>().gameState = GameState.Game;
                     return;
-                case Menu.Option:
-                    
+                case Pause.Retry:
+                    SceneManager.LoadScene(3);
                     return;
-                case Menu.Exit:
-                    Application.Quit();
+                case Pause.Option:
+                     
+                    return;
+                case Pause.ExitToMap:
+                    SceneManager.LoadScene(2);
                     return;
             }
         }
 
 
-        switch (menuState) 
+        switch (pauseState)
         {
-            case Menu.Play:
+            case Pause.Resume:
                 textColorReset(textBtn[0]);
                 return;
-            case Menu.Option:
+            case Pause.Retry:
                 textColorReset(textBtn[1]);
-                return; 
-            case Menu.Exit:
+                return;
+            case Pause.Option:
                 textColorReset(textBtn[2]);
+                return;
+            case Pause.ExitToMap:
+                textColorReset(textBtn[3]);
                 return;
         }
 
-        
+
     }
 
     public void SwapScene()
@@ -121,14 +128,14 @@ public class MenuBtnManager : MonoBehaviour
 
     public void textColorReset(TextMeshProUGUI changeText)
     {
-        foreach(var t in textBtn)
+        foreach (var t in textBtn)
         {
-            if(changeText == t)
+            if (changeText == t)
                 changeText.color = pointColor;
             else
                 t.color = baseColor;
         }
-        
+
     }
     IEnumerator MoveUI(RectTransform element, Vector2 target, float duration)
     {
@@ -144,7 +151,6 @@ public class MenuBtnManager : MonoBehaviour
 
         // 최종 위치에 정확히 도달하도록 보정
         element.anchoredPosition = target;
-        isMoving = false; // 이동 종료
     }
     IEnumerator FadeUI(Image element, float target, float duration)
     {
@@ -161,6 +167,5 @@ public class MenuBtnManager : MonoBehaviour
         // 최종 위치에 정확히 도달하도록 보정
         element.fillAmount = target;
     }
-
 
 }

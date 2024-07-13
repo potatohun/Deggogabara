@@ -164,7 +164,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   stageData:
-  - {fileID: 11400000, guid: 1aded861796e26b42a2596c0763ba221, type: 2}
+  - {fileID: 11400000, guid: 6ffe5166f1c919041a2c80d0f1cf2704, type: 2}
+  - {fileID: 11400000, guid: 1ffc2d943f8355144b5db52aa3cd982d, type: 2}
+  - {fileID: 11400000, guid: 92d0fe38d9ddcf74b86ab1595929f8da, type: 2}
+  - {fileID: 11400000, guid: c89d76344301fb34c99de2fff77c386a, type: 2}
+  - {fileID: 11400000, guid: cdb3ca2763721e043bc978de67ccb4f4, type: 2}
   chapterName: "\uC815\uAE00"
   backgroundImg: {fileID: 21300000, guid: 99897cdcbeb83c844bdb41c6d7eac13a, type: 3}
 --- !u!1 &2938608133710316282
@@ -555,7 +559,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &625085094820904620
 RectTransform:
   m_ObjectHideFlags: 0
