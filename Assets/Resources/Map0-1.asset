@@ -10,8 +10,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c7746209742b161459627864b01d0183, type: 3}
-  m_Name: Map0-0
+  m_Name: Map0-1
   m_EditorClassIdentifier: 
   TotalCapybaraSpawnCount: 2
   initPlayerPosition: {x: -10, y: -4, z: 0}
-  mapPrefab: {fileID: 3460480888436733052, guid: 6ec5f863a68ffdd4390e1cec3f8fd4ab, type: 3}
+  mapPrefab: {fileID: 3460480888436733052, guid: a1d636003834bce4d84f8c891c13094f, type: 3}

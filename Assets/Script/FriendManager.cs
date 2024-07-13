@@ -71,6 +71,14 @@ public class FriendManager : MonoBehaviour
         canJump = true; // 머리위에 친구가 없을 경우 Jump 가능
     }
 
+    private void OnEnable()
+    {
+        // 맵 생성시
+        captain = GameObject.FindWithTag("Player");
+        headofCaptain = GameObject.FindWithTag("Head");
+    }
+
+
     private void Start()
     {
         // 캡틴이 바라보는 방향 가져오기

@@ -179,16 +179,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e2d5449238f43b74f977e22a9d258d01, type: 3}
---- !u!1 &26697207 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 8443455951272525481, guid: e2d5449238f43b74f977e22a9d258d01, type: 3}
-  m_PrefabInstance: {fileID: 26697206}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &26697208 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 614908275558992788, guid: e2d5449238f43b74f977e22a9d258d01, type: 3}
-  m_PrefabInstance: {fileID: 26697206}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1484683192
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -241,29 +231,9 @@ PrefabInstance:
       propertyPath: m_Name
       value: Map0-0
       objectReference: {fileID: 0}
-    - target: {fileID: 3914996221906326783, guid: 6ec5f863a68ffdd4390e1cec3f8fd4ab, type: 3}
-      propertyPath: captain
-      value: 
-      objectReference: {fileID: 26697207}
-    - target: {fileID: 3914996221906326783, guid: 6ec5f863a68ffdd4390e1cec3f8fd4ab, type: 3}
-      propertyPath: headofCaptain
-      value: 
-      objectReference: {fileID: 26697208}
-    - target: {fileID: 4024717367766943739, guid: 6ec5f863a68ffdd4390e1cec3f8fd4ab, type: 3}
-      propertyPath: m_BoundingShape2D
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 5480225052485592824, guid: 6ec5f863a68ffdd4390e1cec3f8fd4ab, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: -20.92
-      objectReference: {fileID: 0}
-    - target: {fileID: 5480225052485592824, guid: 6ec5f863a68ffdd4390e1cec3f8fd4ab, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: -6.07
-      objectReference: {fileID: 0}
-    - target: {fileID: 5847549246929856078, guid: 6ec5f863a68ffdd4390e1cec3f8fd4ab, type: 3}
-      propertyPath: m_Follow
-      value: 
+    - target: {fileID: 4148308341788991239, guid: 6ec5f863a68ffdd4390e1cec3f8fd4ab, type: 3}
+      propertyPath: orthographic size
+      value: 0.9
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
