@@ -49,6 +49,8 @@ public class Capybara_Move : MonoBehaviour
     public Transform tailPosition;
     public Transform orange;
 
+    public AudioSource jumpSound;
+
     // 컴포넌트
     private Rigidbody2D rigidbody;
     private SpriteRenderer spriteRenderer;
@@ -203,6 +205,7 @@ public class Capybara_Move : MonoBehaviour
         {
             if ((!isFloorStuck) && (!isJumping) && (FriendManager.friendManager.CanJump())) // 점프 중이 아니거나, 회전이 불가능(뒤에 친구들 존재) 하면 점프 가능
             {
+                jumpSound.Play();
                 rigidbody.AddForce(Vector2.up * jumpPower, ForceMode2D.Impulse);
                 FriendManager.friendManager.AllFriendJump();
             }
