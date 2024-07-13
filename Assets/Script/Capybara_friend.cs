@@ -48,7 +48,7 @@ public class Capybara_friend : MonoBehaviour
 
     [SerializeField]
     [Header("합류 가능")]
-    private bool canJoin;
+    public bool canJoin;
 
     [SerializeField]
     [Header("상태 표시창")]
@@ -61,16 +61,20 @@ public class Capybara_friend : MonoBehaviour
     // 컴포넌트
     private Rigidbody2D rigidbody;
     private Animator animator;
+    private GroundCheck groundCheck;
     
     private void OnEnable() // 오브젝트 생성시 호출
     {
         captain = GameObject.FindWithTag("Player");
         rigidbody = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
+        groundCheck = GetComponentInChildren<GroundCheck>();
 
         isStack = false; // 생성될 때 카피바라는 올라가있지 않음
         isMissing = true;
         canJoin = false;
+
+        PopFromHead();
 
         stateNotification.SetActive(false);
     }
@@ -90,7 +94,7 @@ public class Capybara_friend : MonoBehaviour
     {
         FindCaptaion();
 
-        if (DetectGround())// 땅바닥 감지 (점프 중 확인)
+        if (groundCheck.IsGround())// 땅바닥 감지 (점프 중 확인)
         {
             animator.SetBool("isJump", false);
         }
@@ -101,23 +105,9 @@ public class Capybara_friend : MonoBehaviour
 
         if (!isMissing)
         {
-            if (isStack && (this.transform.localPosition.y < 0)) // 쌓아져있다가 튕겨져서 머리위에서 떨어짐.
-            {
-                FriendManager.friendManager.MissingFromHead(this);
-                FriendManager.friendManager.EnqueueToTail(this);
-            }
-
-            if (!isStack && (this.transform.localPosition.x < -3)) // 카피바라보다 앞에 위치하면 miss
+            if ((isStack && (this.transform.localPosition.y < 0))) // 쌓아져있다가 튕겨져서 머리위에서 떨어짐.)
             {
                 Missing();
-            }
-        }
-
-        if (canJoin)
-        {
-            if (Input.GetKeyDown(KeyCode.F)) // 대열 합
-            {
-                JoinToGroup();
             }
         }
     }
@@ -175,7 +165,7 @@ public class Capybara_friend : MonoBehaviour
             distanceToPlayer = Vector2.Distance(captain.transform.position, this.transform.position);
 
             // followDistnaceOffset 보다 훨씬 멀어지면 (followDistnaceOffset*2 정도?) 더 이상 쫓아가지 않고 그 자리에서 찾기만 계속함(Missing 상태)
-            if (distanceToPlayer > followDistanceOffset * 5)
+            if (distanceToPlayer > followDistanceOffset * 10)
             {
                 Missing(); // 거리가 멀어지면 대열에서 잃어버려짐
             }
@@ -185,9 +175,12 @@ public class Capybara_friend : MonoBehaviour
     public void Missing() // 대장을 잃어버림. (뺏김, 걸려서 못 쫓아감 등)
     {
         isMissing = true;
+        canJoin = true;
+        isStack = false;
         this.transform.parent = FriendManager.friendManager.gameObject.transform; // 부모를 FriendManager로
         this.number = 0;
         this.followDistanceOffset = FriendManager.friendManager.FriendOffset();
+        FriendManager.friendManager.MissingFromHead(this); // 큐에서 자기 자신 빼기
         FriendManager.friendManager.DequeueFromTail(this); // 큐에서 자기 자신 빼기
     }
 
@@ -196,11 +189,12 @@ public class Capybara_friend : MonoBehaviour
         return isMissing;
     }
 
-    void JoinToGroup() // 대장을 찾음!
+    public void JoinToGroup() // 대장을 찾음!
     {
         DisableNotification();
         isMissing = false;
-        canJoin = false;
+        isStack = false;
+        canJoin = true;
         this.transform.parent = captain.transform; // 부모를 Captain으로
         FriendManager.friendManager.EnqueueToTail(this); // 큐에서 자기 자신 넣기
     }
@@ -215,7 +209,6 @@ public class Capybara_friend : MonoBehaviour
         RaycastHit2D[] hits = Physics2D.RaycastAll(transform.position + Vector3.down, Vector2.down, 1f);
         foreach (RaycastHit2D hit in hits)
         {
-            Debug.Log(hit.collider.name);
             if (hit.collider.CompareTag("Ground") || hit.collider.CompareTag("Player") || hit.collider.CompareTag("Friends"))
             {
                 return true; // Ground 감지 O
@@ -258,5 +251,10 @@ public class Capybara_friend : MonoBehaviour
             notificationIcon[1].SetActive(false);
             notificationIcon[0].SetActive(true);
         }
+    }
+
+    public float DistanceToCaptain()
+    {
+        return distanceToPlayer;
     }
 }
