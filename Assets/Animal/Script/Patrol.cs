@@ -2,20 +2,25 @@ using UnityEngine;
 
 public class Patrol : MonoBehaviour
 {
-    public float speed;
-    public float moveX; //, moveY;
-    public float minX, maxX; //, minY, maxY;
+    [SerializeField]
+    protected float speed;
 
-    public Vector3 initPos;
-    public Vector2 moveSpot;
+    protected float moveX; 
+    protected float minX, maxX; 
 
-    public LayerMask playerLayer;
-    public float FindRange;
- 
+    protected Vector3 initPos;
+    protected Vector2 moveSpot;
 
-    public bool detectCapy = false;
+    [SerializeField]
+    private LayerMask playerLayer;
 
-    public Vector3 leftScale, rightScale;
+    [SerializeField]
+    private float FindRange;
+
+    [SerializeField]
+    protected bool detectCapy = false;
+
+    protected Vector3 leftScale, rightScale;
 
     virtual protected void Start()
     {
@@ -31,10 +36,17 @@ public class Patrol : MonoBehaviour
         detectCapy = Physics2D.OverlapCircle(transform.position, FindRange ,playerLayer);
     
         SpriteFlip(moveSpot);
-
+         
     }
 
 
+    public Vector3 GetScale(bool input)
+    {
+        if (input == true)
+            return rightScale;    
+        else
+            return leftScale;
+    }
     void OnDrawGizmos()
     {
         Gizmos.color = Color.red;
@@ -44,12 +56,10 @@ public class Patrol : MonoBehaviour
     public void SpriteFlip(Vector3 pos)
     {
 
-
         if (transform.position.x - pos.x < 0) // 스프라이트 flip
             transform.localScale = rightScale;
         else
             transform.localScale = leftScale;
-
     }
 
 

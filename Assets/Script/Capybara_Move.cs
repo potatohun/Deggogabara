@@ -79,6 +79,15 @@ public class Capybara_Move : MonoBehaviour
         transform.position += new Vector3(inputVector.x , 0, 0); // 실제 움직임
     }
 
+
+    public float GetMovePower()
+    {
+        return movePower;
+    }
+    public void SetMovePower(float power)
+    {
+        movePower = power;
+    }
     public void OnMove(InputAction.CallbackContext value) // 움직임
     {
         if (FriendManager.friendManager.CanRotate())

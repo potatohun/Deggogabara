@@ -3,8 +3,8 @@ using UnityEngine;
 
 public class Patrol_Ele : Patrol
 {
-    public TakeCapy_Ele TC;
-    public bool go_takeCapy = false;
+    private TakeCapy_Ele TC;
+    private bool go_takeCapy = false;
 
     protected override void Start()
     {
@@ -18,12 +18,17 @@ public class Patrol_Ele : Patrol
     }
 
 
- 
+    public bool GetGoTakeCapy()
+    { return go_takeCapy; }
+
+    public void SetGoTakeCapy(bool input)
+    { go_takeCapy = input; }
+
     void Swim()
     {
         if (!detectCapy)
         {
-            go_takeCapy = false;
+            go_takeCapy = false;    
             transform.position = Vector2.MoveTowards(transform.position, moveSpot, speed * Time.deltaTime);
 
             if (Vector2.Distance(transform.position, moveSpot) < 0.1f)

@@ -11,13 +11,14 @@ GameObject:
   - component: {fileID: 1369628034012134675}
   - component: {fileID: 781812233763123356}
   - component: {fileID: 447875998776448041}
+  - component: {fileID: 2461249342765316007}
   m_Layer: 0
   m_Name: jilFuckGround
   m_TagString: Ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1369628034012134675
 Transform:
   m_ObjectHideFlags: 0
@@ -98,8 +99,35 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1ac51a0d7c5d1094d9b96b873ad8e4f3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sinkingSpeed: 0.2
-  isInQuicksand: 0
+  sinkingPower: 0.2
+  capyMovePOwer: 0
+--- !u!50 &2461249342765316007
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1892958025693728629}
+  m_BodyType: 1
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 0
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
 --- !u!1 &6093890733209896651
 GameObject:
   m_ObjectHideFlags: 0
@@ -110,9 +138,8 @@ GameObject:
   m_Component:
   - component: {fileID: 8857431849351522110}
   - component: {fileID: 4635644654619540383}
-  - component: {fileID: 728954647167627209}
   m_Layer: 0
-  m_Name: r
+  m_Name: Stairs
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -177,36 +204,19 @@ PolygonCollider2D:
   m_AutoTiling: 0
   m_Points:
     m_Paths:
-    - - {x: 0.23751147, y: 0.075672835}
-      - {x: 0, y: 0.5773587}
-      - {x: -0.35044995, y: 0.5775932}
-      - {x: 0.04576377, y: -0.34910342}
-      - {x: 0.49242777, y: -0.38939458}
+    - - {x: 0.05301576, y: -0.30055237}
+      - {x: 0.010035842, y: -0.20971265}
+      - {x: -0.011594416, y: -0.1962904}
+      - {x: -0.07753898, y: -0.2710817}
+      - {x: -0.10196911, y: -0.28656322}
+      - {x: -0.11699361, y: -0.12932025}
+      - {x: -0.12933612, y: 0.12025747}
+      - {x: -0.1709621, y: 0.25549996}
+      - {x: -0.19356364, y: 0.45043746}
+      - {x: -0.22026084, y: 0.4988275}
+      - {x: -0.26249057, y: 0.5148103}
+      - {x: -0.29042807, y: 0.6284001}
+      - {x: -0.3477965, y: 0.615317}
+      - {x: -0.19317478, y: -0.3775896}
+      - {x: 0.22584695, y: -0.3709855}
   m_UseDelaunayMesh: 0
---- !u!50 &728954647167627209
-Rigidbody2D:
-  serializedVersion: 4
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6093890733209896651}
-  m_BodyType: 1
-  m_Simulated: 1
-  m_UseFullKinematicContacts: 0
-  m_UseAutoMass: 0
-  m_Mass: 1
-  m_LinearDrag: 0
-  m_AngularDrag: 0.05
-  m_GravityScale: 1
-  m_Material: {fileID: 6200000, guid: f461b1081ddef844c8c358aa93029580, type: 2}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_Interpolate: 0
-  m_SleepingMode: 1
-  m_CollisionDetection: 0
-  m_Constraints: 0

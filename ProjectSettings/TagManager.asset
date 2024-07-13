@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Friends
   - Ground
+  - FinishLine
   layers:
   - Default
   - TransparentFX
