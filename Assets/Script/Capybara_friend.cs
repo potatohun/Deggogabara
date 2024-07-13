@@ -58,6 +58,8 @@ public class Capybara_friend : MonoBehaviour
     [Header("알림 아이콘")]
     private GameObject[] notificationIcon;
 
+    private float distanceToTail;
+
     // 컴포넌트
     private Rigidbody2D rigidbody;
     private Animator animator;
@@ -105,9 +107,22 @@ public class Capybara_friend : MonoBehaviour
 
         if (!isMissing)
         {
-            if ((isStack && (this.transform.localPosition.y < 0))) // 쌓아져있다가 튕겨져서 머리위에서 떨어짐.)
+            if (isStack) // 머리 위 상태일 때 
             {
-                Missing();
+                if ((this.transform.localPosition.y < 0)) // 쌓아져있다가 튕겨져서 머리위에서 떨어짐.)
+                {
+                    Debug.Log("튕겨져서 떨어짐");
+                    Missing();
+                }
+            }
+            else // 꼬리 상태 일때
+            {
+                if (!FriendManager.friendManager.GetAllJumping() && (Mathf.Abs(this.transform.position.y - captain.transform.position.y) > 3f))
+                {
+                    Debug.Log("점프에서 떨어짐");
+                    Debug.Log((Mathf.Abs(this.transform.position.y - captain.transform.position.y)));
+                    Missing();
+                }
             }
         }
     }
@@ -141,19 +156,18 @@ public class Capybara_friend : MonoBehaviour
     void Follow()
     {
         // 대열 or 대장을 향한 벡터 계산 : vectorToPlayer
-        vectorToPlayer = captain.transform.position.x - transform.position.x; // 대장 카피바라를 향한 방향
-
-        if (Mathf.Abs(vectorToPlayer) > followDistanceOffset) // vectorToPlayer 보다 작으면 더이상 쫓아가지 않음
+        distanceToTail = captain.GetComponent<Capybara_Move>().tailPosition.position.x - transform.position.x; // 대장 카피바라를 향한 방향
+        if (Mathf.Abs(distanceToTail) > followDistanceOffset) // vectorToPlayer 보다 작으면 더이상 쫓아가지 않음
         {
-            //animator.SetBool("isMove", true);
-            if (vectorToPlayer <= 0)
+            animator.SetBool("isMove", true);
+            if (distanceToTail <= 0)
                 transform.position += Vector3.left * followSpeed; // 왼쪽으로 쫓아가기
-            else if (vectorToPlayer > 0)
+            else if (distanceToTail > 0)
                 transform.position += Vector3.right * followSpeed; // 오른쪽으로 쫓아가기
         }
         else
         {
-            //animator.SetBool("isMove", false);
+            animator.SetBool("isMove", false);
         }
     }
 
@@ -162,11 +176,12 @@ public class Capybara_friend : MonoBehaviour
         if (!isMissing)
         {
             // 대장과의 거리 계산 : distanceToPlayer
-            distanceToPlayer = Vector2.Distance(captain.transform.position, this.transform.position);
+            distanceToTail = Vector2.Distance(captain.GetComponent<Capybara_Move>().tailPosition.position, this.transform.position);
 
             // followDistnaceOffset 보다 훨씬 멀어지면 (followDistnaceOffset*2 정도?) 더 이상 쫓아가지 않고 그 자리에서 찾기만 계속함(Missing 상태)
-            if (distanceToPlayer > followDistanceOffset * 10)
+            if (distanceToTail > (followDistanceOffset * 5))
             {
+                Debug.Log("거리가 멀어져서 떨어짐");
                 Missing(); // 거리가 멀어지면 대열에서 잃어버려짐
             }
         }
@@ -177,6 +192,11 @@ public class Capybara_friend : MonoBehaviour
         isMissing = true;
         canJoin = true;
         isStack = false;
+
+        animator.SetBool("isMove", false);
+        animator.SetBool("isJump", false);
+        PopFromHead();
+
         this.transform.parent = FriendManager.friendManager.gameObject.transform; // 부모를 FriendManager로
         this.number = 0;
         this.followDistanceOffset = FriendManager.friendManager.FriendOffset();
@@ -194,8 +214,8 @@ public class Capybara_friend : MonoBehaviour
         DisableNotification();
         isMissing = false;
         isStack = false;
-        canJoin = true;
-        this.transform.parent = captain.transform; // 부모를 Captain으로
+        canJoin = false;
+        //this.transform.parent = captain.transform; // 부모를 Captain으로
         FriendManager.friendManager.EnqueueToTail(this); // 큐에서 자기 자신 넣기
     }
 
