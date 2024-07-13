@@ -10,7 +10,7 @@ public class Capybara_Move : MonoBehaviour
 {
     [SerializeField]
     [Header("Front")]
-    Vector2 frontVector;
+    Vector2 frontVector = Vector2.right;
 
     [SerializeField]
     [Header("Input Vector")]
@@ -36,24 +36,29 @@ public class Capybara_Move : MonoBehaviour
     [Header("isFloorStuck")]
     bool isFloorStuck;
 
+    [SerializeField]
+    [Header("isFloorStuck")]
+    public Transform headPosition;
+
     // 컴포넌트
     private Rigidbody2D rigidbody;
-    private SpriteRenderer sp;
+    private SpriteRenderer spriteRenderer;
     private Animator animator;
-
+    private GroundCheck groundCheck;
     private void Awake()
     {
         rigidbody = GetComponent<Rigidbody2D>();
-        sp = GetComponent<SpriteRenderer>();
+        spriteRenderer = GetComponent<SpriteRenderer>();
         animator = GetComponent<Animator>();
+        groundCheck = GetComponentInChildren<GroundCheck>();
         isJumping = false;
         isFloorStuck = false;
-        frontVector = Vector2.left;
+        frontVector = Vector2.right;
     }
 
     private void Update()
     {
-        if (DetectGround())// 땅바닥 감지 (점프 중 확인)
+        if (groundCheck.IsGround())// 땅바닥 감지 (점프 중 확인)
         {
             isJumping = false;
             animator.SetBool("isJump", false);
@@ -87,12 +92,18 @@ public class Capybara_Move : MonoBehaviour
             if (inputVector.x < 0) // 앞 방향 계산
             {
                 frontVector = Vector2.left;
-                transform.localScale = new Vector3(1f, 1f, 1f);
+                spriteRenderer.flipX = true;
+                headPosition.transform.localPosition = new Vector3(0.98f, 0, 0);
+                FriendManager.friendManager.HeadFlip(true);
+                //transform.localScale = new Vector3(1f, 1f, 1f);
             }
             else if (inputVector.x > 0)
             {
                 frontVector = Vector2.right;
-                transform.localScale = new Vector3(-1f, 1f, 1f);
+                spriteRenderer.flipX = false;
+                headPosition.transform.localPosition = new Vector3(-0.98f, 0, 0);
+                FriendManager.friendManager.HeadFlip(false);
+                //transform.localScale = new Vector3(-1f, 1f, 1f);
             }
             else
             {
@@ -127,7 +138,6 @@ public class Capybara_Move : MonoBehaviour
                 FriendManager.friendManager.FriendsMoveFalse();
                 inputVector = Vector2.zero;
             }
-                
         }
     }
 
