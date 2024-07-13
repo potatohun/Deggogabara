@@ -1,20 +1,29 @@
 
 using UnityEngine;
+using static UnityEngine.Rendering.DebugUI;
 
 public class TraceAndSwallow : MonoBehaviour
 {
-    public Animal animal;
-    public Patrol patrol;
+    private Animal animal;
+    private Patrol patrol;
+    private GameObject swallowDestination;
+    private bool isCatch = false;
 
-    public float speed;
+    [SerializeField]
+    private float speed;
 
-    public LayerMask playerLayer;
-    public float FindRange = 4f;
+    [SerializeField]
+    private LayerMask playerLayer;
+    
+    [SerializeField] 
+    private float FindRange = 4f;
 
-    public Collider2D target;
-    public bool isCatch = false;
+    [SerializeField]
+    private Collider2D target;
 
-    public GameObject swallowDestination;
+
+
+   
 
 
     private void Start()
@@ -24,7 +33,8 @@ public class TraceAndSwallow : MonoBehaviour
     }
     private void Update()
     {
-        target = Physics2D.OverlapCircle(transform.position, FindRange, playerLayer); // 납치용오버랩서클
+        if (!isCatch)
+            target = Physics2D.OverlapCircle(transform.position, FindRange, playerLayer); // 납치용오버랩서클
 
 
         Trace();
@@ -59,23 +69,28 @@ public class TraceAndSwallow : MonoBehaviour
     {
         if (isCatch) // 잡았다
         {
-            FriendManager.friendManager.CaptainTaken();
+            if (target.gameObject.CompareTag("Player"))
+                FriendManager.friendManager.CaptainTaken();
+            else if (target.gameObject.CompareTag("Friends"))
+                target.gameObject.GetComponent<Capybara_friend>().Missing();
+
 
             target.GetComponent<SpriteRenderer>().sortingOrder--;
             target.transform.position = transform.GetChild(0).GetComponent<Transform>().position;
             transform.position = Vector2.MoveTowards(transform.position, swallowDestination.transform.position, speed * Time.deltaTime);
-            //잡았을때 카피바라 위치조정필요함
             patrol.SpriteFlip(swallowDestination.transform.position);
+
+            FriendManager.friendManager.SetCanRotate(false);
         }
     }
 
     void ArriveDestination()
     {
-  
+
         if (Vector2.Distance(transform.position, swallowDestination.transform.position) < 0.1f) // swallowDestination에 다왔다   
         {
             isCatch = false;
-            target.GetComponent<SpriteRenderer>().sortingOrder++;        
+            target.GetComponent<SpriteRenderer>().sortingOrder++;
             target.GetComponent<Rigidbody2D>().isKinematic = false;
             FriendManager.friendManager.SetCanRotate(true);
 
@@ -88,12 +103,18 @@ public class TraceAndSwallow : MonoBehaviour
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject == target.gameObject)
+        
+        if (collision == target)
         {
             animal.ani.SetBool("Catch", true);
+    
 
-            target.transform.localScale = new Vector3(-1, 1, 1);
-        //여기부터    FriendManager.friendManager.SetCanRotate(false);
+            if (transform.localScale.x > 0)
+                target.GetComponent<SpriteRenderer>().flipX = false;
+            else
+                target.GetComponent<SpriteRenderer>().flipX = true;
+
+         
             target.GetComponent<Rigidbody2D>().isKinematic = true;
 
             isCatch = true;

@@ -166,8 +166,7 @@ MonoBehaviour:
   stagePrefabList:
   - {fileID: 6213130919415775204, guid: a28618a9e74d4db44a47563aa3d2bc0e, type: 3}
   - {fileID: 6213130919415775204, guid: d7a3696c013aea5448f43e1717090a05, type: 3}
-  chapterName: Jungle
-  chapterSprite: {fileID: 21300000, guid: 99897cdcbeb83c844bdb41c6d7eac13a, type: 3}
+  chapterName: "\uC815\uAE00"
 --- !u!1 &2938608133710316282
 GameObject:
   m_ObjectHideFlags: 0
@@ -236,8 +235,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: New Text
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 761d88ecc0a196049bce894673d4aac4, type: 2}
+  m_sharedMaterial: {fileID: 1381398403305346686, guid: 761d88ecc0a196049bce894673d4aac4, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -536,8 +535,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   stagePrefabList: []
-  chapterName: Ocean
-  chapterSprite: {fileID: 0}
+  chapterName: "\uBC14\uB2E4"
 --- !u!1 &6445496513821873347
 GameObject:
   m_ObjectHideFlags: 0
@@ -702,8 +700,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   stagePrefabList: []
-  chapterName: Mountain
-  chapterSprite: {fileID: 0}
+  chapterName: "\uACE0\uC0B0\uC9C0\uB300"
 --- !u!1 &8140514769562417173
 GameObject:
   m_ObjectHideFlags: 0

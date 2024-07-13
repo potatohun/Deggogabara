@@ -2,9 +2,12 @@ using UnityEngine;
 
 public class NewBehaviourScript : MonoBehaviour
 {
-    public CapsuleCollider2D bounceCol;
-    public Rigidbody2D rb;
-    public float bouncePower;
+    private CapsuleCollider2D bounceCol;
+    private Rigidbody2D rb;
+
+    [SerializeField]
+    private float bouncePower;
+
     void Start()
     {
         bounceCol = GetComponentInChildren<CapsuleCollider2D>();
@@ -16,12 +19,14 @@ public class NewBehaviourScript : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Player"))
         {
+            SpriteRenderer CapySR = collision.gameObject.GetComponent<SpriteRenderer>();
+
             Vector3 normalVec = new Vector3(0, -1, 0);//collision.contacts[0].normal;
 
             // Vector3 collidePoint = collision.contacts[0].point;
             Vector2 incomingVec; //= collidePoint - collision.transform.position;
 
-            if (collision.transform.localScale.y < 0)
+            if (CapySR.flipX == false)
                 incomingVec = new Vector2(1, -1);
             else
                 incomingVec = new Vector2(-1, -1);

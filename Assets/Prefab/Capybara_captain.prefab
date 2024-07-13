@@ -435,6 +435,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: GroundCheck
       objectReference: {fileID: 0}
+    - target: {fileID: 6549278854922813647, guid: f5804e3025bb0a242864c25466094aa7, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

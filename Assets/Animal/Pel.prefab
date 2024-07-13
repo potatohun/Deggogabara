@@ -217,7 +217,7 @@ MonoBehaviour:
   moveSpot: {x: 0, y: 0}
   playerLayer:
     serializedVersion: 2
-    m_Bits: 64
+    m_Bits: 8
   FindRange: 14
   detectCapy: 0
   leftScale: {x: 0, y: 0, z: 0}
@@ -241,7 +241,7 @@ MonoBehaviour:
   speed: 7
   playerLayer:
     serializedVersion: 2
-    m_Bits: 64
+    m_Bits: 8
   FindRange: 10
   target: {fileID: 0}
   isCatch: 0
