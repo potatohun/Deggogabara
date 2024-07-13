@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class FriendManager : MonoBehaviour
 {
+    public int tailCount;
+    public int headCount;
     public static FriendManager friendManager;
 
     [SerializeField]
@@ -49,6 +51,7 @@ public class FriendManager : MonoBehaviour
     [Header("카피바라 친구 프리팹")]
     public GameObject friend_prefab;
 
+    public bool IsTeamJumping;
     public bool CanRotate()
     {
         return canRotate;
@@ -69,6 +72,7 @@ public class FriendManager : MonoBehaviour
 
         canRotate = true; // 친구가 하나 이상 있을 경우 Rotate 불가!
         canJump = true; // 머리위에 친구가 없을 경우 Jump 가능
+        IsTeamJumping = false;
     }
 
     private void OnEnable()
@@ -91,7 +95,7 @@ public class FriendManager : MonoBehaviour
             EnqueueToTail(friend.GetComponent<Capybara_friend>());
 
             // 부모 설정 및 위치 초기화
-            friend.transform.parent = captain.transform;
+            //friend.transform.parent = captain.transform;
             //friend.transform.position = captain.transform.position + new Vector3((friends_on_tail.Count) * friendsOffset, 0, 0);
 
             // 생성된 카피바라 친구들 초기화(순서, 거리 등)
@@ -105,16 +109,26 @@ public class FriendManager : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.UpArrow)) // 쌓기
         {
-            if (!captain.GetComponent<Capybara_Move>().GetFloorStuck()) // 머리에 벽이 있으면 머리 위로 못쌓게 함!
+            if (!captain.GetComponent<Capybara_Move>().GetUpFloorStuck()) // 머리에 벽이 있으면 머리 위로 못쌓게 함!
             {
                 EnqueueToHead();
+            }
+            else
+            {
+                Debug.Log("ERROR : 위에 벽이 막혀있어요!");
             }
         }
 
         if (Input.GetKeyDown(KeyCode.DownArrow)) // 내리기
         {
-            Debug.Log("내리기");
-            DequeueFromHead();
+            if (!captain.GetComponent<Capybara_Move>().GetBackFloorStuck())
+            {
+                DequeueFromHead();
+            }
+            else
+            {
+                Debug.Log("ERROR : 뒤에 벽이 막혀있어요!");
+            }
         }
 
         if (Input.GetKeyDown(KeyCode.F)) // 내리기
@@ -122,16 +136,16 @@ public class FriendManager : MonoBehaviour
             JoinFriend();
         }
 
-        /*Debug.Log("머리 :" + friends_on_head.Count);
-        Debug.Log("꼬리 :" + friends_on_tail.Count);*/
+        tailCount = friends_on_tail.Count;
+        headCount = friends_on_head.Count;
     }
     private void EnqueueToHead() // 카피바라 친구들을 대장 머리 위로 쌓기
     {
         if (friends_on_tail.Count > 0 && !captain.GetComponent<Capybara_Move>().GetJuming()) // 올릴 카피바라가 존재하면
         {
-            if ((friends_on_tail.Peek().transform.localPosition.y < -1) || (friends_on_tail.Peek().transform.localPosition.y > 1))
+            if (Mathf.Abs(friends_on_tail.Peek().transform.position.y - captain.transform.position.y) > 3f)
             {
-                Debug.Log("높이가 달라서 쌓을 수 없음");
+                Debug.Log("ERROR : 높이가 달라서 쌓을 수 없음");
                 return;
             }
             Capybara_friend friend = friends_on_tail.Dequeue(); // 꼬리 Queue에서 Dequeue
@@ -160,16 +174,14 @@ public class FriendManager : MonoBehaviour
                 friends_on_tail.Enqueue(friend);
                 friend.PopFromHead();
 
-                friend.transform.parent = captain.transform; // 대장 카피바라를 부모로 취급
+                friend.transform.parent = this.transform; // 매니저를 부모로 취급
 
                 if (captain.GetComponent<Capybara_Move>().GetFront() == Vector2.left)
                     // 왼쪽을 보고 있을 때
-                    friend.transform.position = captain.transform.position + new Vector3((friends_on_tail.Count) * friendsOffset, 0, 0);
+                    friend.transform.position = captain.GetComponent<Capybara_Move>().tailPosition.position + new Vector3(friendsOffset, 0, 0);
                 else
                     // 오른쪽을 보고 있을 때
-                    friend.transform.position = captain.transform.position + new Vector3(-(friends_on_tail.Count) * friendsOffset, 0, 0);
-
-
+                    friend.transform.position = captain.GetComponent<Capybara_Move>().tailPosition.position + new Vector3(-friendsOffset, 0, 0);
 
                 // 위치 재설정
                 friend.Initialize((friends_on_tail.Count), (friends_on_tail.Count) * friendsOffset);
@@ -242,14 +254,25 @@ public class FriendManager : MonoBehaviour
     }
     private IEnumerator AllFriendJumpCoroutine()
     {
+        IsTeamJumping = true;
         foreach (Capybara_friend friend in friends_on_tail)
         {
             yield return new WaitForSeconds(jumpDelay);
             if (!friend.GetMissing())
                 friend.Jump();
         }
+        Invoke("DelayJumpDetect", 2f);
     }
 
+    void DelayJumpDetect()
+    {
+        IsTeamJumping = false;
+    }
+
+    public bool GetAllJumping()
+    {
+        return IsTeamJumping;
+    }
     public void DequeueFromTail(Capybara_friend capybara) // 꼬리에서 벗어난 카피바라 처리
     {
         Queue<Capybara_friend> tmp = new Queue<Capybara_friend>();
@@ -286,12 +309,10 @@ public class FriendManager : MonoBehaviour
 
         if (captain.GetComponent<Capybara_Move>().GetFront() == Vector2.left)
             // 왼쪽을 보고 있을 때
-            capybara_friend.transform.position = captain.transform.position + new Vector3(((friends_on_tail.Count) * friendsOffset), 0, 0);
+            capybara_friend.transform.position = captain.GetComponent<Capybara_Move>().tailPosition.position + new Vector3(friendsOffset, 0, 0);
         else
             // 오른쪽을 보고 있을 때
-            capybara_friend.transform.position = captain.transform.position + new Vector3(-((friends_on_tail.Count) * friendsOffset), 0, 0);
-
-        Debug.Log(capybara_friend.transform.localScale);
+            capybara_friend.transform.position = captain.GetComponent<Capybara_Move>().tailPosition.position + new Vector3(-friendsOffset, 0, 0);
 
         if (captain.GetComponent<Capybara_Move>().GetFront() == Vector2.left)
         {
@@ -301,7 +322,6 @@ public class FriendManager : MonoBehaviour
         {
             capybara_friend.GetComponent<SpriteRenderer>().flipX = false;
         }
-        //capybara_friend.transform.localScale = new Vector3(Mathf.Abs(capybara_friend.transform.localScale.x), capybara_friend.transform.localScale.y, capybara_friend.transform.localScale.z); // 스케일 초기화
         capybara_friend.Initialize((friends_on_tail.Count), (friends_on_tail.Count) * friendsOffset);
 
         StateCheck();
