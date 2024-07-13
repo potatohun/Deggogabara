@@ -30,7 +30,20 @@ public class GameManager : MonoBehaviour
         }
     }
 
+
+
+    public AudioSource uiAudioMaster;
+
+    [Header("È¿°úÀ½")]
+    public AudioClip btnSwap;
+    public AudioClip btnSelect;
+
     public GameObject map;
+
+    private void OnEnable()
+    {
+       
+    }
 
     public void SelectMap()
     {

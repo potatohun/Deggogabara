@@ -69,6 +69,7 @@ public class ChapterManager : MonoBehaviour
                     {
                         if (lastChapter < 2)
                         {
+                            GameManager.instance.uiAudioMaster.PlayOneShot(GameManager.instance.btnSwap);
                             lastChapter++;
                             targetPosition = new Vector2(-960 * lastChapter, -300);
                             StartCoroutine(MoveUI(chapterRect, targetPosition, duration));
@@ -83,6 +84,7 @@ public class ChapterManager : MonoBehaviour
                     {
                         if (selectedStage < stage.stagePrefabList.Count - 1)
                         {
+                            GameManager.instance.uiAudioMaster.PlayOneShot(GameManager.instance.btnSwap);
                             selectedStage++;
                             ColorReset(stageList[selectedStage]);
                         }
@@ -100,6 +102,7 @@ public class ChapterManager : MonoBehaviour
                     {
                         if (lastChapter > 0)
                         {
+                            GameManager.instance.uiAudioMaster.PlayOneShot(GameManager.instance.btnSwap);
                             lastChapter--;
                             targetPosition = new Vector2(-960 * lastChapter, -300);
                             StartCoroutine(MoveUI(chapterRect, targetPosition, duration));
@@ -112,6 +115,7 @@ public class ChapterManager : MonoBehaviour
                     {
                         if (selectedStage > 0)
                         {
+                            GameManager.instance.uiAudioMaster.PlayOneShot(GameManager.instance.btnSwap);
                             selectedStage--;
                             ColorReset(stage.stagePrefabList[selectedStage]);
                         }
@@ -123,6 +127,7 @@ public class ChapterManager : MonoBehaviour
 
         if(Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.Space))
         {
+            GameManager.instance.uiAudioMaster.PlayOneShot(GameManager.instance.btnSelect);
             switch (uiState)
             {
                 case UI.Chapter:
@@ -200,7 +205,7 @@ public class ChapterManager : MonoBehaviour
             else
             {
                 StartCoroutine(ResizeUI(chapter, defaultSize, duration));
-                StartCoroutine(FadeUI(chapter.GetComponent<Image>(), 0.5f, duration));
+                StartCoroutine(FadeUI(chapter.GetComponent<Image>(), 0.8f, duration));
             }
         }
          

@@ -9,6 +9,7 @@ public class AnyKeyDown : MonoBehaviour
     {
         if(Input.anyKeyDown)
         {
+            GameManager.instance.uiAudioMaster.PlayOneShot(GameManager.instance.btnSelect);
             SceneManager.LoadScene(1);
         }
     }

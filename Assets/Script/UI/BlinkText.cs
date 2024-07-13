@@ -9,6 +9,9 @@ public class BlinkText : MonoBehaviour
     TextMeshProUGUI blinkText;
     public string tempText;
 
+    public Color baseColor =  new Color(204, 204, 204,1);
+    public Color pointColor = Color.white;
+
     public void Awake()
     {
         blinkText = GetComponent<TextMeshProUGUI>();
@@ -24,9 +27,9 @@ public class BlinkText : MonoBehaviour
     {
         while (true)
         {
-            blinkText.text = tempText;
+            blinkText.color = baseColor;
             yield return new WaitForSeconds(blinkTime);
-            blinkText.text = "";
+            blinkText.color = pointColor;
             yield return new WaitForSeconds(blinkTime);
         }
 

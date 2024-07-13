@@ -11,9 +11,13 @@ public enum Menu
 }
 public class MenuBtnManager : MonoBehaviour
 {
+
     public Menu menuState;
 
-    Color baseColor = Color.white;
+    [SerializeField]
+    Color baseColor = new Color(204, 204, 204, 1);
+    [SerializeField]
+    Color pointColor = Color.white;
 
     public List<TextMeshProUGUI> textBtn;
 
@@ -27,13 +31,14 @@ public class MenuBtnManager : MonoBehaviour
 
     private void Start()
     {
-        textBtn[0].color = Color.red;
+        textBtn[0].color = pointColor;
     }
 
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.DownArrow) || Input.GetKeyDown(KeyCode.S))
         {
+            GameManager.instance.uiAudioMaster.PlayOneShot(GameManager.instance.btnSwap);
             switch (menuState)
             {
                 case Menu.Play:
@@ -49,6 +54,7 @@ public class MenuBtnManager : MonoBehaviour
         }
         if( Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.W))
         {
+            GameManager.instance.uiAudioMaster.PlayOneShot(GameManager.instance.btnSwap);
             switch (menuState)
             {
                 case Menu.Play:
@@ -64,6 +70,7 @@ public class MenuBtnManager : MonoBehaviour
         }
         if(Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.Return))
         {
+            GameManager.instance.uiAudioMaster.PlayOneShot(GameManager.instance.btnSelect);
             switch (menuState)
             {
                 case Menu.Play:
@@ -100,9 +107,10 @@ public class MenuBtnManager : MonoBehaviour
         foreach(var t in textBtn)
         {
             if(changeText == t)
-                changeText.color = Color.red;
+                changeText.color = pointColor;
             else
                 t.color = baseColor;
         }
+        
     }
 }

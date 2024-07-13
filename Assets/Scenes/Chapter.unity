@@ -151,6 +151,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0aa5049fe55243446af612bac0d570cc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  uiAudioMaster: {fileID: 0}
+  btnSwap: {fileID: 0}
+  btnSelect: {fileID: 0}
   map: {fileID: 0}
 --- !u!4 &291530958
 Transform:
