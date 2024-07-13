@@ -57,6 +57,11 @@ public class FriendManager : MonoBehaviour
     {
         return canRotate;
     }
+
+    public void SetCanRotate(bool input)
+    {
+        canRotate = input;
+    }
     public bool CanJump()
     {
         return canJump;
@@ -279,6 +284,7 @@ public class FriendManager : MonoBehaviour
 
     public void CaptainTaken() // 대장 카피바라가 잡힘
     {
+        Debug.Log("ㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋ");
         foreach (Capybara_friend friend in friends_on_head) // 머리에 존재하던 카피바라들 내리기
         {
             DequeueFromHead();
