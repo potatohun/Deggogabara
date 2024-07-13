@@ -71,7 +71,7 @@ public class ChapterManager : MonoBehaviour
                         {
                             GameManager.instance.uiAudioMaster.PlayOneShot(GameManager.instance.btnSwap);
                             lastChapter++;
-                            targetPosition = new Vector2(-960 * lastChapter, -300);
+                            targetPosition = new Vector2(-960 * lastChapter, -250);
                             StartCoroutine(MoveUI(chapterRect, targetPosition, duration));
                             
                             SwapChapter();
@@ -104,7 +104,7 @@ public class ChapterManager : MonoBehaviour
                         {
                             GameManager.instance.uiAudioMaster.PlayOneShot(GameManager.instance.btnSwap);
                             lastChapter--;
-                            targetPosition = new Vector2(-960 * lastChapter, -300);
+                            targetPosition = new Vector2(-960 * lastChapter, -250);
                             StartCoroutine(MoveUI(chapterRect, targetPosition, duration));
 
                             SwapChapter();
@@ -150,7 +150,7 @@ public class ChapterManager : MonoBehaviour
                             
                         }
 
-                        targetPosition = new Vector2(0, 25);
+                        targetPosition = new Vector2(0, 35);
                         StartCoroutine(MoveUI(stageRect, targetPosition, duration));
                         StartCoroutine(ResizeUI(chapterList[lastChapter], defaultSize, duration));
                         foreach (var chapter in chapterList)
@@ -202,7 +202,7 @@ public class ChapterManager : MonoBehaviour
             {
                 StartCoroutine(ResizeUI(chapter, focusSize, duration));
                 StartCoroutine(FadeUI(chapter.GetComponent<Image>(), 1f, duration));
-                chapterBackground.sprite = chapter.GetComponent<Image>().sprite;
+                chapterBackground.sprite = chapter.GetComponent<Chapter>().backgroundImg;
             }
             else
             {
@@ -229,9 +229,9 @@ public class ChapterManager : MonoBehaviour
         foreach (var t in stageList)
         {
             if (stageList[selectedStage] == t)
-                t.GetComponent<Image>().color = Color.red;
+                t.GetComponentsInChildren<Image>()[1].color = new Color(255, 255, 255, 0f);
             else
-                t.GetComponent<Image>().color = Color.white;
+                t.GetComponentsInChildren<Image>()[1].color = new Color(255, 255, 255, 0.8f);
         }
     }
 
