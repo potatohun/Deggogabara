@@ -5,7 +5,9 @@ public class Patrol : MonoBehaviour
     [SerializeField]
     protected float speed;
 
-    protected float moveX; 
+    protected float moveX;
+
+    [SerializeField]
     protected float minX, maxX; 
 
     protected Vector3 initPos;

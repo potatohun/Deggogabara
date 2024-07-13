@@ -4,6 +4,8 @@ using UnityEngine;
 public class Patrol_Snake : Patrol
 {
     private Swallow_Snake SN;
+
+    [SerializeField]
     private bool go_takeCapy = false;
 
     protected override void Start()
@@ -19,7 +21,7 @@ public class Patrol_Snake : Patrol
 
 
     public bool GetGoTakeCapy()
-    { return go_takeCapy; }
+    { return go_takeCapy; } 
 
     public void SetGoTakeCapy(bool input)
     { go_takeCapy = input; }
