@@ -4,18 +4,27 @@ public class Swallow_Snake : MonoBehaviour
 {
     //   Swim하다가.. 발견하면 Spot으로이동.. 3초간 trigger반응없으면 다시 돌아가
 
+    private Patrol_Snake patrol;
+
+    [SerializeField]
+    private bool letsGo = false;
+
     [SerializeField]
     private float speed;
 
-    private bool letsGo = false;
+    [SerializeField]
+    private float takeCapy_PosX;
 
     [SerializeField]
     private GameObject target;
 
-    private Patrol_Snake patrol;
+    private Vector2 takeCapy_Pos;
+
     void Start()
     {
         patrol = GetComponent<Patrol_Snake>();
+  
+        takeCapy_Pos = new Vector2(takeCapy_PosX, transform.position.y);
     }
 
 
@@ -30,14 +39,11 @@ public class Swallow_Snake : MonoBehaviour
 
         }
 
-        /*   if (Vector2.Distance(transform.position, new Vector3(110.09f, -4.3f, 0)) > 0.2f && !letsGo)
-               ToCapy();*/
-
 
         if (letsGo)
             Invoke("TakeCapy", 1f);
 
-        if (Vector2.Distance(transform.position, new Vector3(110.5f, -4.3f, 0)) < 0.1f)
+        if (Vector2.Distance(transform.position, takeCapy_Pos) < 0.1f)
         {
             letsGo = false;
             target.gameObject.SetActive(true);
@@ -47,18 +53,13 @@ public class Swallow_Snake : MonoBehaviour
     }
 
 
-    /*   void ToCapy()
-       {       
-           transform.position = Vector2.MoveTowards(transform.position, new Vector3(110.09f, -4.3f, 0), speed * Time.deltaTime);
-           patrol.SpriteFlip(new Vector3(-48.37f, -19.5f, 0));
-       }
-   */
+ 
     void TakeCapy()
     {
         patrol.enabled = false;
-        transform.position = Vector2.MoveTowards(transform.position, new Vector3(110.5f, -4.3f, 0), speed * Time.deltaTime);
+        transform.position = Vector2.MoveTowards(transform.position, takeCapy_Pos, speed * Time.deltaTime);
         target.transform.position = transform.position;
-        patrol.SpriteFlip(new Vector3(110.5f, -4.3f, 0));
+        patrol.SpriteFlip(takeCapy_Pos);
     }
 
 
@@ -72,12 +73,7 @@ public class Swallow_Snake : MonoBehaviour
         }
     }
 
-    /*  private void OnCollisionExit2D(Collision2D collision)
-      {
-          if (collision.gameObject.CompareTag("Player"))
-              Invoke("ReturnToSwim", 2f);
 
-      }*/
 
     void ReturnToPatrol()
     {

@@ -1,29 +1,30 @@
 
 using UnityEngine;
-using static UnityEngine.Rendering.DebugUI;
 
 public class TraceAndSwallow : MonoBehaviour
 {
     private Animal animal;
     private Patrol patrol;
-    private GameObject swallowDestination;
-    private bool isCatch = false;
+
+    [SerializeField]
+    private Vector2 swallowDestination;
 
     [SerializeField]
     private float speed;
 
     [SerializeField]
     private LayerMask playerLayer;
-    
-    [SerializeField] 
+
+    [SerializeField]
     private float FindRange = 4f;
 
     [SerializeField]
     private Collider2D target;
 
 
+    private bool isCatch = false;
 
-   
+
 
 
     private void Start()
@@ -31,6 +32,7 @@ public class TraceAndSwallow : MonoBehaviour
         animal = GetComponent<Animal>();
         patrol = GetComponent<Patrol>();
     }
+
     private void Update()
     {
         if (!isCatch)
@@ -77,8 +79,8 @@ public class TraceAndSwallow : MonoBehaviour
 
             target.GetComponent<SpriteRenderer>().sortingOrder--;
             target.transform.position = transform.GetChild(0).GetComponent<Transform>().position;
-            transform.position = Vector2.MoveTowards(transform.position, swallowDestination.transform.position, speed * Time.deltaTime);
-            patrol.SpriteFlip(swallowDestination.transform.position);
+            transform.position = Vector2.MoveTowards(transform.position, swallowDestination, speed * Time.deltaTime);
+            patrol.SpriteFlip(swallowDestination);
 
             FriendManager.friendManager.SetCanRotate(false);
         }
@@ -87,7 +89,7 @@ public class TraceAndSwallow : MonoBehaviour
     void ArriveDestination()
     {
 
-        if (Vector2.Distance(transform.position, swallowDestination.transform.position) < 0.1f) // swallowDestination에 다왔다   
+        if (Vector2.Distance(transform.position, swallowDestination) < 0.1f) // swallowDestination에 다왔다   
         {
             isCatch = false;
             target.GetComponent<SpriteRenderer>().sortingOrder++;
@@ -103,18 +105,18 @@ public class TraceAndSwallow : MonoBehaviour
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        
+
         if (collision == target)
         {
             animal.ani.SetBool("Catch", true);
-    
+
 
             if (transform.localScale.x > 0)
                 target.GetComponent<SpriteRenderer>().flipX = false;
             else
                 target.GetComponent<SpriteRenderer>().flipX = true;
 
-         
+
             target.GetComponent<Rigidbody2D>().isKinematic = true;
 
             isCatch = true;
