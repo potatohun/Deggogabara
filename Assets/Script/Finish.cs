@@ -103,7 +103,15 @@ public class Finish : MonoBehaviour
         }
 
         Debug.Log($"{GameManager.instance.map.chapter}{GameManager.instance.map.stage}: {PlayerPrefs.GetInt($"{GameManager.instance.map.chapter}{GameManager.instance.map.stage}")}");
-        SceneManager.LoadScene(2);
+
+        if(GameManager.instance.map.stage == 4)
+        {
+            SceneManager.LoadScene("EndScene");
+        }
+        else
+        {
+            SceneManager.LoadScene(2);
+        }
     }
 
 
