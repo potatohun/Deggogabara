@@ -126,7 +126,7 @@ public class ChapterManager : MonoBehaviour
             }    
         }
 
-        if(Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.Space))
+        if(Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.DownArrow) || Input.GetKeyDown(KeyCode.S))
         {
             GameManager.instance.uiAudioMaster.PlayOneShot(GameManager.instance.btnSelect);
             switch (uiState)

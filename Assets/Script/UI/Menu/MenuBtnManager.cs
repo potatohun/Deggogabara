@@ -115,7 +115,7 @@ public class MenuBtnManager : MonoBehaviour
     public void SwapScene()
     {
         {
-            SceneManager.LoadScene(2);
+            SceneManager.LoadScene(5);
         }
     }
 

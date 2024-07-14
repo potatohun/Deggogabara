@@ -516,7 +516,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 0}
+  m_Sprite: {fileID: 21300000, guid: 4cabea47c74dd03479d26cf60666e042, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -540,7 +540,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   stageData: []
   chapterName: "\uBC14\uB2E4"
-  backgroundImg: {fileID: 0}
+  backgroundImg: {fileID: 21300000, guid: 99897cdcbeb83c844bdb41c6d7eac13a, type: 3}
 --- !u!1 &6060292938342120863
 GameObject:
   m_ObjectHideFlags: 0
@@ -779,7 +779,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 0}
+  m_Sprite: {fileID: 21300000, guid: 433ca8ac463c3134b935e05dbcdbc659, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -802,8 +802,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   stageData: []
-  chapterName: "\uACE0\uC0B0\uC9C0\uB300"
-  backgroundImg: {fileID: 0}
+  chapterName: "\uC0B0"
+  backgroundImg: {fileID: 21300000, guid: 99897cdcbeb83c844bdb41c6d7eac13a, type: 3}
 --- !u!1 &8140514769562417173
 GameObject:
   m_ObjectHideFlags: 0
