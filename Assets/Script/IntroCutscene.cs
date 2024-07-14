@@ -15,6 +15,14 @@ public class IntroCutscene : MonoBehaviour
         Invoke("FadeIn", 40f);
     }
 
+    private void Update()
+    {
+        if(Input.anyKeyDown)
+        {
+            FadeIn();
+        }
+    }
+
     void LoadNextScene()
     {
         SceneManager.LoadScene("Chapter");

@@ -15,8 +15,8 @@ public class OutroCutScene : MonoBehaviour
     {
         FadeOut();
 
-        PlayableDirector[1].Play();
-        Invoke("LoadNextScene", 10f);
+        //PlayableDirector[1].Play();
+        Invoke("LoadNextScene", 5f);
 
         /*if (GameManager.instance.) // º° 3°³
         {
