@@ -1,5 +1,7 @@
 <h1>2024 Myme 게임잼 참가 프로젝트</h1>
 
+![로고](https://github.com/user-attachments/assets/3cb3a6d5-61c8-414c-ac12-f49206e105cd)
+
 주제 : Move
 게임명 : 데꼬가바라
 
