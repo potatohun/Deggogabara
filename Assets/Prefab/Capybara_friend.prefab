@@ -107,7 +107,7 @@ MonoBehaviour:
   distanceToPlayer: 0
   vectorToPlayer: 0
   jumpPower: 60
-  followSpeed: 0.25
+  followSpeed: 0.3
   followDistanceOffset: 4
   unfollowDistance: 8
   isStack: 0

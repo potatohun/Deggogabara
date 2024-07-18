@@ -161,9 +161,13 @@ public class Capybara_friend : MonoBehaviour
         {
             animator.SetBool("isMove", true);
             if (distanceToTail <= 0)
+            {
                 transform.position += Vector3.left * followSpeed; // 왼쪽으로 쫓아가기
+            }
             else if (distanceToTail > 0)
+            {
                 transform.position += Vector3.right * followSpeed; // 오른쪽으로 쫓아가기
+            }
         }
         else
         {
@@ -178,12 +182,12 @@ public class Capybara_friend : MonoBehaviour
             // 대장과의 거리 계산 : distanceToPlayer
             distanceToTail = Vector2.Distance(captain.GetComponent<Capybara_Move>().tailPosition.position, this.transform.position);
 
-            // followDistnaceOffset 보다 훨씬 멀어지면 (followDistnaceOffset*2 정도?) 더 이상 쫓아가지 않고 그 자리에서 찾기만 계속함(Missing 상태)
+            /*// followDistnaceOffset 보다 훨씬 멀어지면 (followDistnaceOffset*2 정도?) 더 이상 쫓아가지 않고 그 자리에서 찾기만 계속함(Missing 상태)
             if (distanceToTail > (followDistanceOffset * 5))
             {
                 Debug.Log("거리가 멀어져서 떨어짐");
                 Missing(); // 거리가 멀어지면 대열에서 잃어버려짐
-            }
+            }*/
         }
     }
 
@@ -240,6 +244,7 @@ public class Capybara_friend : MonoBehaviour
     {
         isStack = true;
         rigidbody.excludeLayers = LayerMask.GetMask("Nothing");
+        animator.SetBool("isMove", false);
         //rigidbody.bodyType = RigidbodyType2D.Kinematic;
     }
     public void PopFromHead() // 머리에서 내릴 때

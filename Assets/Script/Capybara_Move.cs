@@ -1,11 +1,5 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngine.InputSystem.Controls;
-using UnityEngine.Rendering;
-using UnityEngine.Rendering.Universal;
-using static UnityEngine.Rendering.DebugUI;
 
 public class Capybara_Move : MonoBehaviour
 {
@@ -109,22 +103,26 @@ public class Capybara_Move : MonoBehaviour
         {
             if ((frontVector.x > 0) && (inputVector.x > 0)) // 오른쪽 쳐다볼 때
             {
-                 // 못감
+                // 못감
             }
             else if ((frontVector.x < 0) && (inputVector.x < 0)) // 왼쪽 쳐다볼 때
             {
                 // 못감
             }
             else
+            {
                 transform.position += new Vector3(inputVector.x, 0, 0); // 실제 움직임
+            }
+
         }
         else
         {
             transform.position += new Vector3(inputVector.x, 0, 0); // 실제 움직임
         }
+        Debug.Log(inputVector.x);
     }
 
-
+     
     public float GetMovePower()
     {
         return movePower;
@@ -138,7 +136,7 @@ public class Capybara_Move : MonoBehaviour
         if (FriendManager.friendManager.CanRotate())
         {
             animator.SetBool("isMove", true);
-            //FriendManager.friendManager.FriendsMoveTrue();
+
             // 회전 가능 (뒤에 카피바라 친구들 없음)
             inputVector = value.ReadValue<Vector2>();
             inputVector *= movePower;
@@ -160,8 +158,8 @@ public class Capybara_Move : MonoBehaviour
                 spriteRenderer.flipX = false;
                 headPosition.localPosition = new Vector3(-0.3f, 1, 0);
                 tailPosition.localPosition = new Vector3(-1.3f, -0.25f, 0);
-                orange.localPosition = new Vector3(0.9827635f, 1.682442f,0);
-                frontCheck.gameObject.transform.localPosition = new Vector3(2.26f, -0.1f,0);
+                orange.localPosition = new Vector3(0.9827635f, 1.682442f, 0);
+                frontCheck.gameObject.transform.localPosition = new Vector3(2.26f, -0.1f, 0);
                 FriendManager.friendManager.HeadFlip(false);
                 //transform.localScale = new Vector3(-1f, 1f, 1f);
             }
@@ -214,7 +212,7 @@ public class Capybara_Move : MonoBehaviour
 
     bool DetectUpFloor() // 땅바닥 감지
     {
-        RaycastHit2D[] hits = Physics2D.RaycastAll(headPosition.position, Vector2.up, (FriendManager.friendManager.HeadQueueCount()+1)* 2);
+        RaycastHit2D[] hits = Physics2D.RaycastAll(headPosition.position, Vector2.up, (FriendManager.friendManager.HeadQueueCount() + 1) * 2);
         foreach (RaycastHit2D hit in hits)
         {
             if (hit.collider.CompareTag("Ground"))
