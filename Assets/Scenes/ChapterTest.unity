@@ -170,14 +170,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 6828260180303767357, guid: e2d5449238f43b74f977e22a9d258d01, type: 3}
-      propertyPath: m_LocalScale.x
-      value: 0.6573079
-      objectReference: {fileID: 0}
-    - target: {fileID: 6828260180303767357, guid: e2d5449238f43b74f977e22a9d258d01, type: 3}
-      propertyPath: m_LocalScale.y
-      value: 1.6951239
-      objectReference: {fileID: 0}
     - target: {fileID: 8443455951272525481, guid: e2d5449238f43b74f977e22a9d258d01, type: 3}
       propertyPath: m_Name
       value: Capybara_captain

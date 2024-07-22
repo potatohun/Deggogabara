@@ -203,7 +203,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   frontVector: {x: 0, y: 0}
   inputVector: {x: 0, y: 0}
-  movePower: 0.25
+  movePower: 0.3
   jumpPower: 60
   jumpDetectRange: 1.8
   isJumping: 0
@@ -529,11 +529,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 767568863281582353, guid: f5804e3025bb0a242864c25466094aa7, type: 3}
       propertyPath: m_LocalScale.x
-      value: 0.40500003
+      value: 0.6573079
       objectReference: {fileID: 0}
     - target: {fileID: 767568863281582353, guid: f5804e3025bb0a242864c25466094aa7, type: 3}
       propertyPath: m_LocalScale.y
-      value: 2.7960808
+      value: 1.6951239
       objectReference: {fileID: 0}
     - target: {fileID: 767568863281582353, guid: f5804e3025bb0a242864c25466094aa7, type: 3}
       propertyPath: m_LocalPosition.x
