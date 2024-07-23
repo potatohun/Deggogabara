@@ -106,7 +106,7 @@ MonoBehaviour:
   captain: {fileID: 0}
   distanceToPlayer: 0
   vectorToPlayer: 0
-  jumpPower: 60
+  jumpPower: 50
   followSpeed: 0.3
   followDistanceOffset: 4
   unfollowDistance: 8
@@ -132,7 +132,7 @@ Rigidbody2D:
   m_Mass: 1
   m_LinearDrag: 0
   m_AngularDrag: 0.05
-  m_GravityScale: 20
+  m_GravityScale: 15
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2

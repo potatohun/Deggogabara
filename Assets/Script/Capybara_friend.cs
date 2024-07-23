@@ -113,14 +113,14 @@ public class Capybara_friend : MonoBehaviour
                 {
                     Debug.Log("튕겨져서 떨어짐");
                     Missing();
+                    JoinToGroup();
                 }
             }
             else // 꼬리 상태 일때
             {
-                if (!groundCheck.IsGround() && Mathf.Abs(this.transform.position.y - captain.transform.position.y) > 9f)
+                if (!FriendManager.friendManager.GetAllJumping() && !captain.GetComponent<Capybara_Move>().GetJuming() && (distanceToTail > followDistanceOffset * 3f))
                 {
                     Debug.Log("점프에서 떨어짐");
-                    Debug.Log(Mathf.Abs(this.transform.position.y - captain.transform.position.y));
                     Missing();
                 }
             }
@@ -137,7 +137,6 @@ public class Capybara_friend : MonoBehaviour
         {
             distanceToPlayer = Vector2.Distance(captain.transform.position, this.transform.position);
 
-            // followDistnaceOffset 보다 훨씬 멀어지면 (followDistnaceOffset*2 정도?) 더 이상 쫓아가지 않고 그 자리에서 찾기만 계속함(Missing 상태)
             if (distanceToPlayer < followDistanceOffset)
             {
                 canJoin = true;
@@ -181,13 +180,6 @@ public class Capybara_friend : MonoBehaviour
         {
             // 대장과의 거리 계산 : distanceToPlayer
             distanceToTail = Vector2.Distance(captain.GetComponent<Capybara_Move>().tailPosition.position, this.transform.position);
-
-            /*// followDistnaceOffset 보다 훨씬 멀어지면 (followDistnaceOffset*2 정도?) 더 이상 쫓아가지 않고 그 자리에서 찾기만 계속함(Missing 상태)
-            if (distanceToTail > (followDistanceOffset * 5))
-            {
-                Debug.Log("거리가 멀어져서 떨어짐");
-                Missing(); // 거리가 멀어지면 대열에서 잃어버려짐
-            }*/
         }
     }
 
@@ -228,6 +220,7 @@ public class Capybara_friend : MonoBehaviour
         rigidbody.AddForce(Vector2.up * jumpPower, ForceMode2D.Impulse);
         animator.SetBool("isJump", true);
     }
+
     bool DetectGround() // 땅바닥 감지
     {
         RaycastHit2D[] hits = Physics2D.RaycastAll(transform.position + Vector3.down, Vector2.down, 1f);
@@ -281,5 +274,10 @@ public class Capybara_friend : MonoBehaviour
     public float DistanceToCaptain()
     {
         return distanceToPlayer;
+    }
+
+    public bool IsJump()
+    {
+        return groundCheck.isGround;
     }
 }

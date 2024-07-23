@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using static UnityEngine.Rendering.DebugUI;
 
 public class FriendManager : MonoBehaviour
 {
@@ -162,13 +163,13 @@ public class FriendManager : MonoBehaviour
             headSound.Play();
 
             Capybara_friend friend = friends_on_tail.Dequeue(); // 꼬리 Queue에서 Dequeue
-            friends_on_head.Enqueue(friend); // 머리 Queue에 Enqueue
+            
 
             friend.transform.parent = headofCaptain.transform; // 대장 카피바라의 머리를 부모로 취급
-            friend.transform.position = headofCaptain.transform.position + new Vector3(0, (friends_on_head.Count) * headConstant, 0); // 실제 위치 이동
-
+            friend.transform.position = headofCaptain.transform.position + new Vector3(0, 1 + friends_on_head.Count * headConstant, 0); // 실제 위치 이동
             friend.PushOnHead();
 
+            friends_on_head.Enqueue(friend); // 머리 Queue에 Enqueue
             foreach (Capybara_friend otherFriends in friends_on_tail) // 꼬리에 남은 다른 친구들 앞으로 당기기
             {
                 otherFriends.RePosition(); // 위치 재설정
@@ -263,22 +264,44 @@ public class FriendManager : MonoBehaviour
 
     public void AllFriendJump()
     {
+        IsTeamJumping = true;
         StartCoroutine(AllFriendJumpCoroutine());
     }
     private IEnumerator AllFriendJumpCoroutine()
     {
-        IsTeamJumping = true;
         foreach (Capybara_friend friend in friends_on_tail)
         {
             yield return new WaitForSeconds(jumpDelay);
             if (!friend.GetMissing())
                 friend.Jump();
         }
-        Invoke("DelayJumpDetect", 2f);
+        StartCoroutine(AllFriendJumpEndCheckCoroutine());
     }
 
-    void DelayJumpDetect()
+    private IEnumerator AllFriendJumpEndCheckCoroutine()
     {
+        bool allJumpingEnded = false;
+
+        while (!allJumpingEnded)
+        {
+            allJumpingEnded = true;
+            foreach (Capybara_friend friend in friends_on_tail)
+            {
+                if (!friend.IsJump())
+                {
+                    allJumpingEnded = false;
+                    break;
+                }
+            }
+
+            if (!allJumpingEnded)
+            {
+                // 친구들이 아직 점프 중이면 잠시 기다렸다가 다시 확인합니다.
+                yield return new WaitForSeconds(0.1f);
+            }
+        }
+
+        // 모든 친구들이 점프를 완료하면 IsTeamJumping을 false로 설정합니다.
         IsTeamJumping = false;
     }
 
@@ -426,5 +449,10 @@ public class FriendManager : MonoBehaviour
     public int TotalCapybaraFriendCount()
     {
         return friends_on_head.Count + friends_on_tail.Count;
+    }
+
+    public float DetectUpFloorCalculate()
+    {
+        return 1 + HeadQueueCount() * headConstant;
     }
 }

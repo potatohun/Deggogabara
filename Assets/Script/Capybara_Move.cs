@@ -39,6 +39,10 @@ public class Capybara_Move : MonoBehaviour
     [Header("isBackStuck")]
     bool isFrontStuck;
 
+    [SerializeField]
+    [Header("Falling")]
+    bool falling;
+
     public Transform headPosition;
     public Transform tailPosition;
     public Transform orange;
@@ -59,6 +63,7 @@ public class Capybara_Move : MonoBehaviour
         isJumping = false;
         isFloorStuck = false;
         isFrontStuck = false;
+        falling = false;
         frontVector = Vector2.right;
     }
 
@@ -119,7 +124,6 @@ public class Capybara_Move : MonoBehaviour
         {
             transform.position += new Vector3(inputVector.x, 0, 0); // ½ÇÁ¦ ¿òÁ÷ÀÓ
         }
-        Debug.Log(inputVector.x);
     }
 
      
@@ -212,7 +216,7 @@ public class Capybara_Move : MonoBehaviour
 
     bool DetectUpFloor() // ¶¥¹Ù´Ú °¨Áö
     {
-        RaycastHit2D[] hits = Physics2D.RaycastAll(headPosition.position, Vector2.up, (FriendManager.friendManager.HeadQueueCount() + 1) * 2);
+        RaycastHit2D[] hits = Physics2D.RaycastAll(headPosition.position, Vector2.up, FriendManager.friendManager.DetectUpFloorCalculate());
         foreach (RaycastHit2D hit in hits)
         {
             if (hit.collider.CompareTag("Ground"))
@@ -225,7 +229,6 @@ public class Capybara_Move : MonoBehaviour
 
     bool DetectBackFloor() // ¶¥¹Ù´Ú °¨Áö
     {
-        Debug.DrawRay(transform.position, -frontVector, Color.red);
         RaycastHit2D[] hits = Physics2D.RaycastAll(transform.position, -frontVector, FriendManager.friendManager.FriendOffset() + 2f);
         foreach (RaycastHit2D hit in hits)
         {
@@ -239,7 +242,6 @@ public class Capybara_Move : MonoBehaviour
 
     bool DetectFrontFloor() // ¶¥¹Ù´Ú °¨Áö
     {
-        Debug.DrawRay(transform.position, -frontVector, Color.red);
         RaycastHit2D[] hits = Physics2D.RaycastAll(transform.position, frontVector, FriendManager.friendManager.FriendOffset());
         foreach (RaycastHit2D hit in hits)
         {
@@ -268,5 +270,9 @@ public class Capybara_Move : MonoBehaviour
     public bool GetBackFloorStuck()
     {
         return isBackStuck;
+    }
+    public bool GetFalling()
+    {
+        return falling;
     }
 }
