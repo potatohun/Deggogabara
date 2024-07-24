@@ -105,18 +105,17 @@ public class Capybara_friend : MonoBehaviour
             animator.SetBool("isJump", true);
         }
 
-        if (!isMissing)
+        if (!isMissing) // 잃어버리지 않고 잘 쫓아 올때
         {
-            if (isStack) // 머리 위 상태일 때 
+            if (isStack) // 머리 위 상태
             {
                 if ((this.transform.position.y - captain.transform.position.y) < 0) // 쌓아져있다가 튕겨져서 머리위에서 떨어짐.)
                 {
-                    Debug.Log("튕겨져서 떨어짐");
                     Missing();
-                    JoinToGroup();
+                    //JoinToGroup();
                 }
             }
-            else // 꼬리 상태 일때
+            else // 꼬리 상태
             {
                 if (!FriendManager.friendManager.GetAllJumping() && !captain.GetComponent<Capybara_Move>().GetJuming() && (distanceToTail > followDistanceOffset * 3f))
                 {

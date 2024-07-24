@@ -264,8 +264,15 @@ public class FriendManager : MonoBehaviour
 
     public void AllFriendJump()
     {
-        IsTeamJumping = true;
-        StartCoroutine(AllFriendJumpCoroutine());
+        if (IsTeamJumping)
+        {
+            return;
+        }
+        else
+        {
+            IsTeamJumping = true;
+            StartCoroutine(AllFriendJumpCoroutine());
+        }
     }
     private IEnumerator AllFriendJumpCoroutine()
     {
@@ -275,6 +282,12 @@ public class FriendManager : MonoBehaviour
             if (!friend.GetMissing())
                 friend.Jump();
         }
+        AllFriendFalling();
+    }
+
+     public void AllFriendFalling()
+    {
+        IsTeamJumping = true;
         StartCoroutine(AllFriendJumpEndCheckCoroutine());
     }
 
@@ -285,6 +298,11 @@ public class FriendManager : MonoBehaviour
         while (!allJumpingEnded)
         {
             allJumpingEnded = true;
+            if (captain.GetComponent<Capybara_Move>().GetJuming()) // 대장 점프 종료 확인
+            {
+                yield return new WaitForSeconds(0.1f);
+            }
+           
             foreach (Capybara_friend friend in friends_on_tail)
             {
                 if (!friend.IsJump())

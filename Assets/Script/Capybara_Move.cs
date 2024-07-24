@@ -77,6 +77,7 @@ public class Capybara_Move : MonoBehaviour
         else
         {
             isJumping = true;
+            FriendManager.friendManager.AllFriendFalling();
             animator.SetBool("isJump", true);
         }
 
