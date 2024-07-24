@@ -5,7 +5,6 @@ using UnityEngine;
 public class LoadMap : MonoBehaviour
 {
     public GameObject player;
-
     private void Awake()
     {
         
