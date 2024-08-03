@@ -29,7 +29,7 @@ public class TakeCapy_Ele : MonoBehaviour
     }
 
 
-    void Update()
+    void FixedUpdate()
     {
 
         if (patrol.GetGoTakeCapy())

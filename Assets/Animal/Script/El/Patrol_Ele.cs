@@ -20,9 +20,13 @@ public class Patrol_Ele : Patrol
     override protected void Update()
     {
         base.Update();
-        Swim();
+      
     }
 
+    private void FixedUpdate()
+    {
+        Swim();
+    }
 
     public bool GetGoTakeCapy()
     { return go_takeCapy; }

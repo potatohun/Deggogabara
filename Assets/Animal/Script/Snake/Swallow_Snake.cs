@@ -30,7 +30,7 @@ public class Swallow_Snake : MonoBehaviour
     }
 
 
-    void Update()
+    void FixedUpdate()
     {
 
         if (patrol.GetGoTakeCapy())
@@ -44,8 +44,7 @@ public class Swallow_Snake : MonoBehaviour
 
 
         if (letsGo)
-            TakeCapy();
-            //Invoke("TakeCapy", 1f);
+            Invoke("TakeCapy", 1f);
 
         if (Vector2.Distance(transform.position, takeCapy_Pos) < 0.1f && letsGo)
         {
@@ -53,7 +52,9 @@ public class Swallow_Snake : MonoBehaviour
             letsGo = false;
             target.GetComponent<SpriteRenderer>().enabled = true;
             target.transform.GetChild(2).GetComponent<SpriteRenderer>().enabled = true;
-            Invoke("ReturnToPatrol", 3f);
+            target.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.None;
+            target.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeRotation;
+            Invoke("ReturnToPatrol",3f);
         }
 
     }
@@ -78,6 +79,7 @@ public class Swallow_Snake : MonoBehaviour
             target = collision.gameObject;
             target.GetComponent<SpriteRenderer>().enabled = false;
             target.transform.GetChild(2).GetComponent<SpriteRenderer>().enabled = false;
+            target.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeAll;
             letsGo = true;
         }
     }
