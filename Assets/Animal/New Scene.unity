@@ -2504,11 +2504,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 2405723496217478907, guid: e2d5449238f43b74f977e22a9d258d01, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 148.1
+      value: 80.7
       objectReference: {fileID: 0}
     - target: {fileID: 2405723496217478907, guid: e2d5449238f43b74f977e22a9d258d01, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -51.5
+      value: -28.5
       objectReference: {fileID: 0}
     - target: {fileID: 2405723496217478907, guid: e2d5449238f43b74f977e22a9d258d01, type: 3}
       propertyPath: m_LocalPosition.z
@@ -8488,12 +8488,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 61211e83ecb341442b77554fa4df0f16, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 7
   letsGo: 0
-  toCapy_PosX: 55
-  takeCapy_PosX: 97
-  toCapy_Pos: {x: 0, y: 0}
-  takeCapy_Pos: {x: 0, y: 0}
+  toCapySpeed: 0
+  takeCapySpeed: 0
 --- !u!1 &2136302772
 GameObject:
   m_ObjectHideFlags: 0
