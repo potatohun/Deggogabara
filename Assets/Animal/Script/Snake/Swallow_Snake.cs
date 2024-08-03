@@ -35,6 +35,7 @@ public class Swallow_Snake : MonoBehaviour
 
         if (patrol.GetGoTakeCapy())
         {
+          
             animal.ani.SetBool("StartSwallow", true);
             patrol.SetGoTakeCapy(false);
             patrol.enabled = false;
@@ -43,12 +44,15 @@ public class Swallow_Snake : MonoBehaviour
 
 
         if (letsGo)
-            Invoke("TakeCapy", 1f);
+            TakeCapy();
+            //Invoke("TakeCapy", 1f);
 
-        if (Vector2.Distance(transform.position, takeCapy_Pos) < 0.1f)
+        if (Vector2.Distance(transform.position, takeCapy_Pos) < 0.1f && letsGo)
         {
+            
             letsGo = false;
-            target.gameObject.SetActive(true);
+            target.GetComponent<SpriteRenderer>().enabled = true;
+            target.transform.GetChild(2).GetComponent<SpriteRenderer>().enabled = true;
             Invoke("ReturnToPatrol", 3f);
         }
 
@@ -72,7 +76,8 @@ public class Swallow_Snake : MonoBehaviour
         {
             animal.ani.SetTrigger("Swallow");
             target = collision.gameObject;
-            target.SetActive(false);
+            target.GetComponent<SpriteRenderer>().enabled = false;
+            target.transform.GetChild(2).GetComponent<SpriteRenderer>().enabled = false;
             letsGo = true;
         }
     }
