@@ -15,6 +15,6 @@ MonoBehaviour:
   chapter: 0
   stage: 4
   targetTime: 240
-  TotalCapybaraSpawnCount: 5
+  TotalCapybaraSpawnCount: 3
   initPlayerPosition: {x: -15, y: -45, z: 0}
   mapPrefab: {fileID: 3147984752350768614, guid: 2d70b9a47e88a1341bb1db5fcf12fc0a, type: 3}
