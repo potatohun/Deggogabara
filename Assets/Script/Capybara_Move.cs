@@ -118,12 +118,15 @@ public class Capybara_Move : MonoBehaviour
             else
             {
                 transform.position += new Vector3(inputVector.x, 0, 0); // 실제 움직임
+                //rigidbody.MovePosition(new Vector2(transform.position.x + inputVector.x, transform.position.y + inputVector.y));
+
             }
 
         }
         else
         {
             transform.position += new Vector3(inputVector.x, 0, 0); // 실제 움직임
+            //rigidbody.MovePosition(new Vector2(transform.position.x + inputVector.x, transform.position.y + inputVector.y));
         }
     }
 
