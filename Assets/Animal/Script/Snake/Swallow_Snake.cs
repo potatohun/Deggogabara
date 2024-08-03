@@ -30,7 +30,7 @@ public class Swallow_Snake : MonoBehaviour
     }
 
 
-    void FixedUpdate()
+    void Update()
     {
 
         if (patrol.GetGoTakeCapy())

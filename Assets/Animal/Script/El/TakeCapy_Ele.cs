@@ -6,25 +6,17 @@ public class TakeCapy_Ele : MonoBehaviour
     private Patrol_Ele patrol;
 
     [SerializeField]
-    private float speed;
-
-    [SerializeField]
     private bool letsGo = false;
 
-    [SerializeField]
-    private float toCapy_PosX;
-    [SerializeField]
-    private float takeCapy_PosX;
 
-    [SerializeField]
-    private Vector2 toCapy_Pos, takeCapy_Pos;
-  
+    public float toCapySpeed;
+    public float takeCapySpeed;
+
+
+
     void Start()
     {
         patrol = GetComponent<Patrol_Ele>();
-
-        toCapy_Pos = new Vector2(toCapy_PosX, transform.position.y);
-        takeCapy_Pos = new Vector2(takeCapy_PosX, transform.position.y);
 
     }
 
@@ -38,20 +30,22 @@ public class TakeCapy_Ele : MonoBehaviour
             patrol.enabled = false;
         }
 
-        if (Vector2.Distance(transform.position, toCapy_Pos) > 0.2f && !letsGo)
+
+
+        if (Vector2.Distance(transform.position, patrol.toCapy_Pos) > 0.2f && !letsGo)
             ToCapy();
 
 
 
 
-        if (Vector2.Distance(transform.position, takeCapy_Pos) < 0.2f)
+        if (Vector2.Distance(transform.position, patrol.takeCapy_Pos) < 0.2f)
             transform.localScale = patrol.GetScale(false);
 
 
 
 
-        if (letsGo && Vector2.Distance(transform.position, takeCapy_Pos) > 0.1f)
-            Invoke("TakeCapy", 3f);
+        if (letsGo && Vector2.Distance(transform.position, patrol.takeCapy_Pos) > 0.1f)
+            Invoke("TakeCapy", 2f);
 
 
 
@@ -61,15 +55,18 @@ public class TakeCapy_Ele : MonoBehaviour
 
     void ToCapy()
     {
-        transform.position = transform.TransformDirection(Vector2.MoveTowards(transform.position, toCapy_Pos, speed * Time.deltaTime));
-        transform.position = transform.TransformDirection(transform.position);
-        patrol.SpriteFlip(toCapy_Pos);
+
+        transform.position = Vector2.MoveTowards(transform.position, patrol.toCapy_Pos, toCapySpeed * Time.deltaTime);
+
+        patrol.SpriteFlip(patrol.toCapy_Pos);
     }
 
     void TakeCapy()
     {
-        transform.position = Vector2.MoveTowards(transform.position, takeCapy_Pos, speed * Time.deltaTime);
-        patrol.SpriteFlip(takeCapy_Pos);
+
+
+        transform.position = Vector2.MoveTowards(transform.position, patrol.takeCapy_Pos, takeCapySpeed * Time.deltaTime);
+        patrol.SpriteFlip(patrol.takeCapy_Pos);
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -83,13 +80,16 @@ public class TakeCapy_Ele : MonoBehaviour
     private void OnCollisionExit2D(Collision2D collision)
     {
         if (collision.gameObject.CompareTag("Player"))
-            Invoke("ReturnToSwim", 2f);
+        {
 
+            Invoke("ReturnToSwim", 1f);
+        }
     }
 
     void ReturnToSwim()
     {
         patrol.enabled = true;
+        letsGo = false;
         this.enabled = false;
 
     }

@@ -9,18 +9,48 @@ public class Patrol_Ele : Patrol
    
     public Vector2 moveSpot1;
     public Vector2 moveSpot2;
-
+    public Vector2 toCapy_Pos, takeCapy_Pos, toCapy_Pos1, takeCapy_Pos1, toCapy_Pos2, takeCapy_Pos2;
     public bool isWaterEle = false;
+
+
+    public GameObject target;
+
     protected override void Start()
     {
         base.Start();
         moveSpot = moveSpot1;
         TC = GetComponent<TakeCapy_Ele>();
+
+        toCapy_Pos1 = moveSpot1;
+        takeCapy_Pos1 = moveSpot2;
+
+        toCapy_Pos2 = moveSpot2;
+        takeCapy_Pos2 = moveSpot1;
+
+        toCapy_Pos = toCapy_Pos1;
+        takeCapy_Pos = takeCapy_Pos1;
+
+
+
+        target = GameObject.Find("Capybara_captain");
+
+
     }
     override protected void Update()
     {
         base.Update();
-      
+
+        if (Vector2.Distance(target.transform.position, toCapy_Pos1) < 30f)
+        {
+            toCapy_Pos = toCapy_Pos1;
+            takeCapy_Pos = takeCapy_Pos1;
+        }
+        else if (Vector2.Distance(target.transform.position, toCapy_Pos2) < 30f)
+        {
+            toCapy_Pos = toCapy_Pos2;
+            takeCapy_Pos = takeCapy_Pos2;
+        }
+
     }
 
     private void FixedUpdate()
