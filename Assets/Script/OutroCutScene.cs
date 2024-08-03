@@ -4,19 +4,22 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using UnityEngine.Playables;
+using TMPro;
 
 public class OutroCutScene : MonoBehaviour
 {
     public Image image; // Image 컴포넌트 참조
     public float fadeDuration = 1.0f; // fade-in 및 fade-out 지속 시간
+    public TMP_Text text;
 
     public PlayableDirector[] PlayableDirector;
     void Start()
     {
+        Invoke("OpenSkipText", 3f);
         FadeOut();
 
         //PlayableDirector[1].Play();
-        Invoke("LoadNextScene", 5f);
+        //Invoke("LoadNextScene", 5f);
 
         /*if (GameManager.instance.) // 별 3개
         {
@@ -26,6 +29,14 @@ public class OutroCutScene : MonoBehaviour
         {
             PlayableDirector[1].Play();
         }*/
+    }
+
+    private void Update()
+    {
+        if (Input.anyKeyDown && text.gameObject.activeSelf)
+        {
+            LoadNextScene();
+        }
     }
 
     void LoadNextScene()
@@ -59,4 +70,24 @@ public class OutroCutScene : MonoBehaviour
         image.fillAmount = endFill; // 최종 fill 값을 설정
     }
 
+    void OpenSkipText()
+    {
+        text.gameObject.SetActive(true);
+        StartCoroutine(BlinkText());
+    }
+    IEnumerator BlinkText()
+    {
+        while (true)
+        {
+            if (text.alpha <= 0)
+            {
+                text.alpha = 255;
+            }
+            else
+            {
+                text.alpha = 0;
+            }
+            yield return new WaitForSeconds(1f);
+        }
+    }
 }

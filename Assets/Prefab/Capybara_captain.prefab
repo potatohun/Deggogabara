@@ -210,6 +210,7 @@ MonoBehaviour:
   isFloorStuck: 0
   isBackStuck: 0
   isFrontStuck: 0
+  falling: 0
   headPosition: {fileID: 2369345123606489252}
   tailPosition: {fileID: 7374194936373999856}
   orange: {fileID: 5124861266279973497}
@@ -346,14 +347,14 @@ Rigidbody2D:
   m_LinearDrag: 0
   m_AngularDrag: 0.05
   m_GravityScale: 15
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 6200000, guid: 590912ebf0c4a8a4981aac043dc9f48f, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
     m_Bits: 0
-  m_Interpolate: 0
+  m_Interpolate: 1
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
@@ -401,7 +402,7 @@ BoxCollider2D:
   m_AutoTiling: 0
   serializedVersion: 2
   m_Size: {x: 4.48, y: 2.85}
-  m_EdgeRadius: 0
+  m_EdgeRadius: 0.04
 --- !u!95 &7467058992440116190
 Animator:
   serializedVersion: 5
