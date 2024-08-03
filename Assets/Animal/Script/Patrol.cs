@@ -35,6 +35,7 @@ public class Patrol : MonoBehaviour
 
     virtual protected void Update()
     {
+      
         detectCapy = Physics2D.OverlapCircle(transform.position, FindRange ,playerLayer);
     
         SpriteFlip(moveSpot);

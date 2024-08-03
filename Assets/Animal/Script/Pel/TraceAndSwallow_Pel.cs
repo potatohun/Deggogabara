@@ -33,7 +33,7 @@ public class TraceAndSwallow : MonoBehaviour
         patrol = GetComponent<Patrol>();
     }
 
-    private void Update()
+    private void FixedUpdate()
     {
         if (!isCatch)
             target = Physics2D.OverlapCircle(transform.position, FindRange, playerLayer); // ³³Ä¡¿ë¿À¹ö·¦¼­Å¬
