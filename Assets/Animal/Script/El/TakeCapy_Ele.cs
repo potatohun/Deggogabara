@@ -56,7 +56,7 @@ public class TakeCapy_Ele : MonoBehaviour
     void ToCapy()
     {
 
-        transform.position = Vector2.MoveTowards(transform.position, patrol.toCapy_Pos, toCapySpeed * Time.deltaTime);
+        transform.position = Vector2.MoveTowards(transform.position, patrol.toCapy_Pos, toCapySpeed);
 
         patrol.SpriteFlip(patrol.toCapy_Pos);
     }
@@ -65,7 +65,7 @@ public class TakeCapy_Ele : MonoBehaviour
     {
 
 
-        transform.position = Vector2.MoveTowards(transform.position, patrol.takeCapy_Pos, takeCapySpeed * Time.deltaTime);
+        transform.position = Vector2.MoveTowards(transform.position, patrol.takeCapy_Pos, takeCapySpeed);
         patrol.SpriteFlip(patrol.takeCapy_Pos);
     }
 

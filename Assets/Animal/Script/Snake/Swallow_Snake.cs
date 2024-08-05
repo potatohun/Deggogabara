@@ -30,7 +30,7 @@ public class Swallow_Snake : MonoBehaviour
     }
 
 
-    void Update()
+    void FixedUpdate()
     {
 
         if (patrol.GetGoTakeCapy())
@@ -65,7 +65,7 @@ public class Swallow_Snake : MonoBehaviour
     {
        
         patrol.enabled = false;
-        transform.position = Vector2.MoveTowards(transform.position, takeCapy_Pos, speed * Time.deltaTime);
+        transform.position = Vector2.MoveTowards(transform.position, takeCapy_Pos, speed);
         target.transform.position = transform.position;
         patrol.SpriteFlip(takeCapy_Pos);
     }

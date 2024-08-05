@@ -71,7 +71,7 @@ public class Patrol_Ele : Patrol
         if (!detectCapy)
         {
             go_takeCapy = false;    
-            transform.position = Vector2.MoveTowards(transform.position, moveSpot, speed * Time.deltaTime);
+            transform.position = Vector2.MoveTowards(transform.position, moveSpot, speed);
 
            if (Vector2.Distance(transform.position, moveSpot) < 0.1f && moveSpot == moveSpot1)
             {
