@@ -106,20 +106,23 @@ public class TraceAndSwallow : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D collision)
     {
 
-        if (collision == target)
+        if (Vector2.Distance(transform.position, swallowDestination) > 5f)
         {
-            animal.ani.SetBool("Catch", true);
+            if (collision == target)
+            {
+                animal.ani.SetBool("Catch", true);
 
 
-            if (transform.localScale.x > 0)
-                target.GetComponent<SpriteRenderer>().flipX = false;
-            else
-                target.GetComponent<SpriteRenderer>().flipX = true;
+                if (transform.localScale.x > 0)
+                    target.GetComponent<SpriteRenderer>().flipX = false;
+                else
+                    target.GetComponent<SpriteRenderer>().flipX = true;
 
 
-            target.GetComponent<Rigidbody2D>().isKinematic = true;
+                target.GetComponent<Rigidbody2D>().isKinematic = true;
 
-            isCatch = true;
+                isCatch = true;
+            }
         }
     }
 
