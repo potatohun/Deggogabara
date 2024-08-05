@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class JilFuckSandRestart : MonoBehaviour
 {
@@ -12,7 +13,23 @@ public class JilFuckSandRestart : MonoBehaviour
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.layer == LayerMask.NameToLayer("Capybara"))
-            collision.gameObject.transform.position = restartPos;
+        if (collision.gameObject.CompareTag("Player"))
+            SceneManager.LoadScene(3);
+        else if (collision.gameObject.CompareTag("Friends"))
+        {
+            collision.gameObject.GetComponent<Capybara_friend>().Missing();
+            collision.transform.position = restartPos;
+        }
     }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.CompareTag("Friends"))
+        {
+            collision.gameObject.GetComponent<Capybara_friend>().Missing();
+            collision.transform.position = restartPos;
+        }
+}
+
+
 }
