@@ -1,4 +1,3 @@
-using System.Collections;
 using UnityEngine;
 
 public class Patrol_Ele : Patrol
@@ -6,7 +5,7 @@ public class Patrol_Ele : Patrol
     private TakeCapy_Ele TC;
     private bool go_takeCapy = false;
 
-   
+
     public Vector2 moveSpot1;
     public Vector2 moveSpot2;
     public Vector2 toCapy_Pos, takeCapy_Pos, toCapy_Pos1, takeCapy_Pos1, toCapy_Pos2, takeCapy_Pos2;
@@ -32,7 +31,7 @@ public class Patrol_Ele : Patrol
 
 
 
-        target = GameObject.Find("Capybara_captain");
+        target = GameObject.Find("Capybara_captain(Clone)");
 
 
     }
@@ -40,7 +39,7 @@ public class Patrol_Ele : Patrol
     {
         base.Update();
 
-        if(target != null)
+        if (target != null)
         {
             if (Vector2.Distance(target.transform.position, toCapy_Pos1) < 30f)
             {
@@ -70,14 +69,14 @@ public class Patrol_Ele : Patrol
     {
         if (!detectCapy)
         {
-            go_takeCapy = false;    
+            go_takeCapy = false;
             transform.position = Vector2.MoveTowards(transform.position, moveSpot, speed);
 
-           if (Vector2.Distance(transform.position, moveSpot) < 0.1f && moveSpot == moveSpot1)
+            if (Vector2.Distance(transform.position, moveSpot) < 0.1f && moveSpot == moveSpot1)
             {
                 moveSpot = moveSpot2;
             }
-           else if (Vector2.Distance(transform.position, moveSpot) < 0.1f && moveSpot == moveSpot2)
+            else if (Vector2.Distance(transform.position, moveSpot) < 0.1f && moveSpot == moveSpot2)
             {
                 moveSpot = moveSpot1;
             }
@@ -87,11 +86,11 @@ public class Patrol_Ele : Patrol
         {
             go_takeCapy = true;
             TC.enabled = true;
-            
+
         }
     }
 
 
 
-   
+
 }
