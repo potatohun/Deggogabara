@@ -139,6 +139,8 @@ GameObject:
   m_Component:
   - component: {fileID: 2299074208664425907}
   - component: {fileID: 2812177574836023379}
+  - component: {fileID: 6964830088159839107}
+  - component: {fileID: 4183149484053996011}
   m_Layer: 0
   m_Name: LeftStairs
   m_TagString: Untagged
@@ -216,6 +218,45 @@ PolygonCollider2D:
       - {x: 2.3330307, y: -0.82948506}
       - {x: 2.3409343, y: 1.236953}
   m_UseDelaunayMesh: 0
+--- !u!50 &6964830088159839107
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3010694101503914826}
+  m_BodyType: 1
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
+--- !u!114 &4183149484053996011
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3010694101503914826}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1d79a5386d5332e4ebebf1a7c6614877, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &6093890733209896651
 GameObject:
   m_ObjectHideFlags: 0
@@ -226,6 +267,8 @@ GameObject:
   m_Component:
   - component: {fileID: 8857431849351522110}
   - component: {fileID: 2148121626572801782}
+  - component: {fileID: 8512438668780229832}
+  - component: {fileID: 469718359775394452}
   m_Layer: 0
   m_Name: RIghtStairs
   m_TagString: Untagged
@@ -303,3 +346,42 @@ PolygonCollider2D:
       - {x: 2.3330307, y: -0.82948506}
       - {x: 2.3409343, y: 1.236953}
   m_UseDelaunayMesh: 0
+--- !u!50 &8512438668780229832
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6093890733209896651}
+  m_BodyType: 1
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 0
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
+--- !u!114 &469718359775394452
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6093890733209896651}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1d79a5386d5332e4ebebf1a7c6614877, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
