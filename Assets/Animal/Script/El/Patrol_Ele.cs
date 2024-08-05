@@ -40,17 +40,19 @@ public class Patrol_Ele : Patrol
     {
         base.Update();
 
-        if (Vector2.Distance(target.transform.position, toCapy_Pos1) < 30f)
+        if(target != null)
         {
-            toCapy_Pos = toCapy_Pos1;
-            takeCapy_Pos = takeCapy_Pos1;
+            if (Vector2.Distance(target.transform.position, toCapy_Pos1) < 30f)
+            {
+                toCapy_Pos = toCapy_Pos1;
+                takeCapy_Pos = takeCapy_Pos1;
+            }
+            else if (Vector2.Distance(target.transform.position, toCapy_Pos2) < 30f)
+            {
+                toCapy_Pos = toCapy_Pos2;
+                takeCapy_Pos = takeCapy_Pos2;
+            }
         }
-        else if (Vector2.Distance(target.transform.position, toCapy_Pos2) < 30f)
-        {
-            toCapy_Pos = toCapy_Pos2;
-            takeCapy_Pos = takeCapy_Pos2;
-        }
-
     }
 
     private void FixedUpdate()
