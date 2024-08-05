@@ -31,6 +31,7 @@ public class TraceAndSwallow : MonoBehaviour
     {
         animal = GetComponent<Animal>();
         patrol = GetComponent<Patrol>();
+ 
     }
 
     private void FixedUpdate()
@@ -106,7 +107,7 @@ public class TraceAndSwallow : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D collision)
     {
 
-        if (Vector2.Distance(transform.position, swallowDestination) > 5f)
+        if (Vector2.Distance(transform.position, swallowDestination) > 30f)
         {
             if (collision == target)
             {
