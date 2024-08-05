@@ -470,9 +470,9 @@ AudioSource:
   m_GameObject: {fileID: 734208327}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: 1290721231050247704, guid: 63623eef83fa6ff45a717c20281c27b1, type: 2}
   m_audioClip: {fileID: 8300000, guid: efb478c2bb9112943b9abff32fd5fd65, type: 3}
-  m_PlayOnAwake: 1
+  m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
   Loop: 0
@@ -1344,7 +1344,7 @@ PlayableDirector:
   m_Enabled: 1
   serializedVersion: 3
   m_PlayableAsset: {fileID: 11400000, guid: 6095f8468fa646842a22e4d46f8fc187, type: 2}
-  m_InitialState: 0
+  m_InitialState: 1
   m_WrapMode: 2
   m_DirectorUpdateMode: 1
   m_InitialTime: 0
@@ -1354,7 +1354,7 @@ PlayableDirector:
   - key: {fileID: 3140219991256992513, guid: 6095f8468fa646842a22e4d46f8fc187, type: 2}
     value: {fileID: 86695677}
   - key: {fileID: -348310930886359157, guid: 6095f8468fa646842a22e4d46f8fc187, type: 2}
-    value: {fileID: 0}
+    value: {fileID: 734208333}
   m_ExposedReferences:
     m_References: []
 --- !u!1660057539 &9223372036854775807
