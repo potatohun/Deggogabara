@@ -19,16 +19,23 @@
 "2024 MYME GAME JAM" Entry Project
 -------------------------------------------------------------------------------------------------------------------------
 Title : Deggogabara (데꼬가바라)
+
 Subject : Move
+
 Develop Duration : July 12-14, 2024
 
 <h1>Key Setting</h1>
 
 Move : A (←), D(→)
+
 Move To Head : W(↑)
+
 Move To Tail : S(↓)
+
 Joining the team : F
+
 You can control UI with WASD(←→↑↓) and SPACE.
+
 This game is a Game Jam participation project and it's a prototype version. So the rest of the chapters are currently not playable except for the first one.
 
 ------------------------------------------------------------------------------------------------
