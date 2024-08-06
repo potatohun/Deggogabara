@@ -15,3 +15,25 @@
 최종 결과 : 우수상
 
 게임 링크 : https://potato-hun.itch.io/deggogabara [Web 버전 빌드(이펙트 사운드 이슈 존재), 링크 내 PC버전 다운로드 가능]
+-------------------------------------------------------------------------------------------------------------------------
+<b>"2024 MYME GAME JAM" Entry Project<\b> 
+
+Title : Deggogabara (데꼬가바라)
+<b>Subject : Move<\b>
+Develop Duration : July 12-14, 2024
+Key Setting
+
+Move : A (←), D(→)
+Move To Head : W(↑)
+Move To Tail : S(↓)
+Joining the team : F
+You can control UI with WASD(←→↑↓) and SPACE.
+This game is a Game Jam participation project and it's a prototype version. So the rest of the chapters are currently not playable except for the first one.
+
+------------------------------------------------------------------------------------------------
+
+There is an audio issue in WebGL build, so there is no sound Effect of Intro Cutscene.
+
+Therefore, we also provided the original build file for the PC version. 
+
+Please understand this.
