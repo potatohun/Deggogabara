@@ -25,19 +25,16 @@ public class NewBehaviourScript : MonoBehaviour
         {
             SpriteRenderer CapySR = collision.gameObject.GetComponent<SpriteRenderer>();
 
-            Vector3 normalVec = new Vector3(0, -1, 0);//collision.contacts[0].normal;
-
-            // Vector3 collidePoint = collision.contacts[0].point;
-            Vector2 incomingVec; //= collidePoint - collision.transform.position;
+            Vector2 normalVec = new Vector2(0, -1);  // 평면이기에 collision.contacts[0].normal을 안써도 될것같음          
+            Vector2 incomingVec; 
 
             if (CapySR.flipX == false)
                 incomingVec = new Vector2(1, -bounceHeight);
             else
                 incomingVec = new Vector2(-1, -bounceHeight);
-           
-            Debug.Log("입사각:" + incomingVec + "법선벡터:" + normalVec);
+
             Vector2 bounceVec = Vector2.Reflect(incomingVec.normalized ,normalVec);
-            // Debug.Log(bounceVec);
+
             animal.audioSource.Play();
             collision.rigidbody.AddForce(bounceVec * bounceDistance, ForceMode2D.Impulse);
         }
